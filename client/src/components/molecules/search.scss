@@ -1,0 +1,17 @@
+.title-search {
+    form {
+        width: 100%;
+
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        svg {
+            cursor: pointer;
+            transform: translateY(21px) translateX(-35px);
+            color: #d90429;
+            font-size: 1.2rem;
+        }
+    }
+}
