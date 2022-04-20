@@ -176,23 +176,21 @@ app.put('/add-user-product', async (req, res) => {
     }
 });
 
-app.get('/get-user-products', async (req, res) => {
+app.post('/get-user-products', async (req, res) => {
     try {
-        // const { Userdata } = req.body;
+        const { Userdata } = req.body;
 
-        console.log(req)
+        const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
 
-        // const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
+        if(!candidate) {
+            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+        }
 
-        // if(!candidate) {
-        //     return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
-        // }
-
-        // return res.status(201).json({
-        //     products: {
-        //         userproducts: candidate.userproducts
-        //     }
-        // })
+        return res.status(201).json({
+            products: {
+                userproducts: candidate[0].userproducts
+            }
+        })
 
     } catch (error) {
         console.error(error);
