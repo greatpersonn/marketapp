@@ -197,6 +197,29 @@ app.post('/get-user-products', async (req, res) => {
     }
 });
 
+app.delete('/delete-user-product', async (req, res) => {
+    try {
+        const { Userdata, Product } = req.body;
+        const candidate = await User.findOne({ _id: Userdata._id });
+
+        if(!candidate) {
+            return res.status(400).json({ error: { message: 'Я не могу найти такого пользователя!' } });
+        }
+
+        await User.updateOne({ _id: Userdata._id }, {
+            $pull: {
+                userproducts: {
+                    productkey: Product.productkey,
+                }
+            }
+        });
+
+        return res.status(201).json({ message: 'Предмет был удалёе!' });
+
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 
 

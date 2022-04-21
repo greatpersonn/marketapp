@@ -1,14 +1,13 @@
 import { useState, useContext, useEffect  } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { NavLink } from "react-router-dom";
 
 import SignIn from './Signin';
+import Button from "../atoms/Button";
+import Shopcard from "../organisms/Shopcard";
 
 import { AuthContext } from "../../context/auth-context";
 
 import './shopcart.scss';
-import { NavLink } from "react-router-dom";
-import Button from "../atoms/Button";
 
 const Shopcart = () => {
     const { statusLogin } = useContext(AuthContext);
@@ -37,26 +36,16 @@ const Shopcart = () => {
             {
                 statusLogin ?
                     <div className="container-shopcart">
-                        <p>Добро пожаловать в вашу корзину, предлагаю вам взглянуть на добавленные товары!</p>
-                        <NavLink to='/'>Главная</NavLink>
+                        <p>Корзина <span>{JSON.parse(localStorage.getItem('user')).username}</span></p>
                         {
                             products.map((prod, id) => (
-                                <div className="shopcart-card">
-                                    <img src={require(`../../../public/products/${prod.productimage}`)} alt="userImage" />
-                                    <div className="card-info">
-                                        <p>{prod.productname}</p>
-                                        <p>{prod.productdesc}</p>
-                                    </div>
-                                    <div className="card-price">
-                                        <p>{prod.productprice} руб</p>
-                                    </div>
-                                    <div className="card-tools">
-                                        <FontAwesomeIcon icon={faTrashCan} className='tool-delete' onClick={() => { console.log('delete') }} />
-                                    </div>
-                                </div>
+                                <Shopcard prod={prod} key={id} />
                             ))
                         }
-                        <Button name='Оформить заказ' func={() => { console.log('Авторизация пользователя'); }} />
+                        {
+                            products.length <= 0 ? <p>Возомжно пришло время добавить сюда что-то?</p> : <Button name='Оформить заказ' func={() => { console.log('Авторизация пользователя'); }} />
+                        }
+                        <NavLink to='/'>Главная</NavLink>
                     </div>
                     :
                     <SignIn />
