@@ -221,7 +221,61 @@ app.delete('/delete-user-product', async (req, res) => {
     }
 });
 
+app.post('/create-user-orders', async (req, res) => {
+    try {
+        const { UserId, Products, OrderNum, OrderDate } = req.body;
 
+        const candidate = await User.find({ _id: UserId });
+
+        if(!candidate) {
+            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+        }
+
+        await User.updateOne({ _id: UserId }, {
+            $push: {
+                userorders: { 
+                    ordernum: OrderNum,
+                    orderproducts: Products,
+                    orderstatus: 'Обработка',
+                    orderdate: OrderDate
+                }
+            },
+
+            $set: {
+                userproducts: []
+            },
+        },
+        {
+            multi: true
+        });
+
+        return res.status(201).json({ message: 'Заказ успешно оформлен!' });
+
+    } catch (error) {
+        console.error(error);
+    }
+})
+
+app.post('/get-user-orders', async (req, res) => {
+    try {
+        const { Userdata } = req.body;
+
+        const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
+
+        if(!candidate) {
+            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+        }
+
+        return res.status(201).json({
+            orders: {
+                userorders: candidate[0].userorders
+            }
+        })
+
+    } catch (error) {
+        console.error(error);
+    }
+});
 
 /* PRODUCT */
 app.post('/create-product', async (req, res) => {

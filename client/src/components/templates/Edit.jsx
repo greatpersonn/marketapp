@@ -37,7 +37,7 @@ const Edit = () => {
     return (
         <form onSubmit={editUser} className='form-modal'>
             <div className="main__modal-container">
-                <div className="container-info">
+                <div className="container-info edit" >
                     <Input type='text' nameInput='Новый логин' inputId='productName' holderTitle="Введите новый логин..." inputObject={_editname} />
                     <Input type='text' nameInput='Новая почта' inputId='productKey' holderTitle="Введите новую почту..." inputObject={_editemail} />
                     <Input type='text' nameInput='Изменить роль' inputId='productPrice' holderTitle="Введите новую роль..." inputObject={_editrole} />

@@ -4,13 +4,16 @@ import { NavLink } from "react-router-dom";
 import SignIn from './Signin';
 import Button from "../atoms/Button";
 import Shopcard from "../organisms/Shopcard";
+import Order from "./Order";
 
 import { AuthContext } from "../../context/auth-context";
+import { ModalContext } from "../../context/modal-context";
 
 import './shopcart.scss';
 
 const Shopcart = () => {
     const { statusLogin } = useContext(AuthContext);
+    const { isOrderModal, setOrderModal } = useContext(ModalContext);
     const [products, setProducts] = useState([]); 
 
     const handleLoadProducts = async () => {
@@ -43,12 +46,15 @@ const Shopcart = () => {
                             ))
                         }
                         {
-                            products.length <= 0 ? <p>Возомжно пришло время добавить сюда что-то?</p> : <Button name='Оформить заказ' func={() => { console.log('Авторизация пользователя'); }} />
+                            products.length <= 0 ? <p>Возомжно пришло время добавить сюда что-то?</p> : <Button name='Оформить заказ' func={() => { setOrderModal(prev => !prev); }} />
                         }
                         <NavLink to='/'>Главная</NavLink>
                     </div>
                     :
                     <SignIn />
+            }
+            {
+                isOrderModal && <Order products={products} />
             }
         </>
     );
