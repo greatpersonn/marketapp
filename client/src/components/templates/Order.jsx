@@ -31,7 +31,7 @@ const Order = ({ products }) => {
             const data = { 'UserId': user._id, 'Products': products, 'OrderNum': user._id.length + (Math.floor(Math.random() * 10000)), 'OrderDate': `${date.getDate()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}` };
 
             const params = {
-                from_name: "JILL MARKET",
+                from_name: "MIRTA MARKET",
                 name: user.username,
                 email: user.useremail,
                 ordernum: user._id.length + (Math.floor(Math.random() * 10000)),
@@ -50,6 +50,7 @@ const Order = ({ products }) => {
             if(jsonData.message) {
                 emailjs.send("service_kwflk26","template_xzefzyp", params, 'sJewkiIckH64h4T-y');
                 setTimeout(() => {
+                    setOrderModal(prev => !prev);
                     navigate('/profile', { replace: true });
                 }, 2000);
             }
