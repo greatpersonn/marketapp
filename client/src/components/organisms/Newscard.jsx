@@ -18,3 +18,5 @@ const Newscard = ({ article }) => {
 }
 
 export default Newscard;
+
+/* quiero morir agarrado de tu mano */
