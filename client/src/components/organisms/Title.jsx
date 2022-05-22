@@ -30,7 +30,7 @@ const Title = () => {
         <>
             <div className="container-title">
                 <div className="title-leftside">
-                    <Logo />
+                    <Logo /> 
                     <Search />
                     {/* {
                         statusLogin ?

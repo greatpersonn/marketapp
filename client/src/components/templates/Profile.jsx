@@ -29,7 +29,7 @@ const Profile = () => {
             body: JSON.stringify(data)
         })
 
-        const jsonData = await response.json();
+        const jsonData = await response.json(); 
 
         setOrders(jsonData.orders.userorders);
 

@@ -8,7 +8,7 @@ import './navigation.scss';
 const Navigation = () => {
     const { statusLogin } = useContext(AuthContext);
 
-    return (
+    return ( 
         <div className="title-navigation">
             <NavLink to='/about'>О нас</NavLink>
             <NavLink to='/news'>Новости</NavLink>

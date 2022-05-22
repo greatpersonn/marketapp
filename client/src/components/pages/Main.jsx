@@ -24,7 +24,7 @@ const Main = () => {
             <div className="main__container">
                 <Routes>
                     <Route path="/" element={<><Title /><Products /></>} />
-                    <Route path="/sign-in" element={<SingIn />} />
+                    <Route path="/sign-in" element={<SingIn />} /> 
                     <Route path="/sign-up" element={<SignUp />} />
                     <Route path="/profile" element={<Profile />} />
                     <Route path="/users" element={<Users />} />
