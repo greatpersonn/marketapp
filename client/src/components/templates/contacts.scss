@@ -1,0 +1,82 @@
+.container-contacts {
+    p {
+        margin: 0;
+        padding: 50px 0px 0px;
+        font-size: 1.6rem;
+
+        &:nth-child(1) {
+            width: 1000px;
+            padding: 5px 0px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.685);
+        }
+
+        &:nth-child(2) {
+            width: 1000px;
+            padding: 5px 0px;
+            font-size: 1.1rem;
+            color: rgba(0, 0, 0, 0.466);
+        }
+
+        &:nth-child(5) {
+            padding: 30px 0px 10px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: rgba(0, 0, 0, 0.685);
+
+            span {
+                font-size: 1.1rem;
+                color: rgba(0, 0, 0, 0.466);
+            }
+        }
+    }
+
+    .contacts-feedback {
+        margin: 15px 0px;
+        display: flex;
+        flex-direction: column;
+
+        a {
+            margin: 3px 0px;
+            text-decoration: none;
+            letter-spacing: 0.04rem;
+            font-weight: 400;
+            color: rgba(0, 0, 0, 0.685);
+
+            &:hover {
+                cursor: pointer;
+                color: black;
+            }
+        }
+    }
+
+    .contacts-social {
+        svg {
+            padding: 15px 10px 0px;
+
+            color: rgb(0, 0, 0);
+            font-size: 1.6rem;
+            text-decoration: none;
+
+            transition: .3s all;
+
+            &:hover {
+                transition: .4s all;
+                cursor: pointer;
+                color: rgb(201, 37, 37);
+            }
+        }
+    }
+
+
+    iframe {
+        margin: 10px 0px;
+
+        width: 975px;
+        height: 400px;
+
+        outline: none;
+        border: none;
+    }
+}

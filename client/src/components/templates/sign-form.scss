@@ -1,0 +1,51 @@
+.container-signin, .container-signup {    
+    form {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .signin-headtext {
+            margin: 30px 0 10px;
+
+            font-size: 30px;
+            text-align: center;
+            font-weight: 600;
+            color: rgba(26, 26, 26, 0.8);
+            text-transform: uppercase;
+        }
+
+        a {
+            color: #000;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-decoration: none;
+            text-transform: uppercase;
+
+            transition: .5s all;
+
+            &:hover {
+                transition: .3s all;
+                color: rgba(255, 82, 82, 1);
+            }
+        }
+    }
+}
+.container-signin { 
+    padding: 160px 0px 381px;
+}
+
+.container-signup { 
+    padding: 160px 0px 181px;
+}
+
+
+main.darkthemes {
+    .signin-headtext {
+        color: #fff;
+    }
+
+    a {
+        color: #fff;
+    }
+}
