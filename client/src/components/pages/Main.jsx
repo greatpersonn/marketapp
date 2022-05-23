@@ -11,6 +11,7 @@ import Shopcart from "../templates/Shopcart";
 import News from "../templates/News";
 import About from "../templates/About";
 import Contacts from "../templates/Contacts";
+import Admin from "../templates/Admin";
 
 import { ThemeContext } from "../../context/theme-context";
 
@@ -32,6 +33,7 @@ const Main = () => {
                     <Route path="/news" element={<News />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/contacts" element={<Contacts />} />
+                    <Route path="/adminpanel" element={<Admin />} />
                 </Routes>
             </div>
         </main>

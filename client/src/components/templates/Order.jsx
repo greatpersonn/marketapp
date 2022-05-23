@@ -36,7 +36,7 @@ const Order = ({ products }) => {
                 email: user.useremail,
                 ordernum: user._id.length + (Math.floor(Math.random() * 10000)),
                 orderstatus: 'Обработка',
-                orderdate: `${date.getDate()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
+                orderdate: `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}`
             }
 
             const response = await fetch('http://localhost:5000/create-user-orders', {

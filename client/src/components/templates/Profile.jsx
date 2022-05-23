@@ -29,7 +29,7 @@ const Profile = () => {
             body: JSON.stringify(data)
         })
 
-        const jsonData = await response.json(); 
+        const jsonData = await response.json();
 
         setOrders(jsonData.orders.userorders);
 
@@ -41,7 +41,7 @@ const Profile = () => {
         localStorage.removeItem('user');
         setStatus(prev => !prev);
     }
-    
+
     useEffect(() => {
         handleLoadData();
     }, []);
@@ -62,7 +62,11 @@ const Profile = () => {
                                         <p>Почта: <span>{user.useremail}</span></p>
                                         <p>Роль: <span>{user.userrole}</span></p>
                                         <NavLink to="/">Главная</NavLink>
+                                        <NavLink to="/shop-cart">Корзина</NavLink>
                                         <NavLink to="/" onClick={handleLogout}>Выход</NavLink>
+                                        {
+                                            user.userrole === 'Admin' || user.userrole === 'Moderator' || user.userrole === 'Operator' ? <NavLink to='/adminpanel'>Панель сотрудника</NavLink> : null
+                                        }
                                     </div>
                                     <div className="profile-order">
                                         {
