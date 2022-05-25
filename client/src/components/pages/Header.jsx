@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { NavLink } from 'react-router-dom';
 
 // Context
 import { ThemeContext } from "../../context/theme-context";
@@ -20,7 +21,7 @@ const Header = () => {
         <header>
             <div className="header__container">
                 <div className="container-headweb">
-                    Добро пожаловать
+                    <NavLink to='/'>MIRTA</NavLink>
                 </div>
                 <div className="container-option">
                     <Switch />
