@@ -12,6 +12,8 @@ import News from "../templates/News";
 import About from "../templates/About";
 import Contacts from "../templates/Contacts";
 import Admin from "../templates/Admin";
+import Orders from "../templates/Orders";
+import Feedbacks from "../templates/Feedbacks";
 
 import { ThemeContext } from "../../context/theme-context";
 
@@ -34,6 +36,8 @@ const Main = () => {
                     <Route path="/about" element={<About />} />
                     <Route path="/contacts" element={<Contacts />} />
                     <Route path="/adminpanel" element={<Admin />} />
+                    <Route path="/orders" element={<Orders />} />
+                    <Route path="/feedbacks" element={<Feedbacks />} />
                 </Routes>
             </div>
         </main>

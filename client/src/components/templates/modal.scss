@@ -57,6 +57,58 @@
                 }
             }
 
+            .container-textarea {
+                width: 300px;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+
+                label {
+                    padding: 15px 10px 8px;
+                    font-size: 1rem;
+                    font-weight: 600;
+                    text-transform: uppercase;
+                    color: rgba(26, 26, 26, 0.8);
+                }
+
+                textarea {
+                    width: 280px;
+                    height: 100px;
+                    padding: 15px 10px;
+                    resize: none;
+
+                    border: none;
+                    outline: none;
+                    background: #e2e2dd;
+                    border-radius: 15px;
+
+                    color: rgba(26, 26, 26, 0.7);
+                    font-size: 0.9rem;
+                    font-weight: 600;
+                    font-family: 'Commissioner', sans-serif;
+
+                    &::placeholder {
+                        transition: .5s all;
+
+                        font-size: 0.80rem;
+                        font-family: 'Commissioner', sans-serif;
+                        font-weight: 600;
+                        color: rgba(26, 26, 26, 0.5);
+                    }
+
+                    &:focus {
+                        outline: 2px solid #d90429;
+
+                        &::placeholder {
+                            transition: .5s all;
+                            opacity: 0;
+                            transform: translateX(15px);
+                        }
+                    }
+                }
+            }
+
             .uploader__container {
                 padding: 0px 20px;
                 position: relative;

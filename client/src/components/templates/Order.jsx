@@ -21,6 +21,7 @@ const Order = ({ products }) => {
 
     const _houseaddrres = useInput('', true);
     const _postaddress = useInput('', true);
+    const _phonenumber = useInput('', true);
 
     const date = new Date();
 
@@ -28,7 +29,7 @@ const Order = ({ products }) => {
         try {
             e.preventDefault();
             const user = JSON.parse(localStorage.getItem('user'));
-            const data = { 'UserId': user._id, 'Products': products, 'OrderNum': user._id.length + (Math.floor(Math.random() * 10000)), 'OrderDate': `${date.getDate()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}` };
+            const data = { 'UserId': user._id, 'Products': products, 'PhoneNumber': _phonenumber.value, 'OrderNum': user._id.length + (Math.floor(Math.random() * 10000)), 'OrderDate': `${date.getDate()}.${date.getMonth()}.${date.getFullYear()} ${date.getHours()}:${date.getMinutes()}` };
 
             const params = {
                 from_name: "MIRTA MARKET",
@@ -47,8 +48,8 @@ const Order = ({ products }) => {
 
             const jsonData = await response.json();
 
-            if(jsonData.message) {
-                emailjs.send("service_kwflk26","template_xzefzyp", params, 'sJewkiIckH64h4T-y');
+            if (jsonData.message) {
+                emailjs.send("service_kwflk26", "template_xzefzyp", params, 'sJewkiIckH64h4T-y');
                 setTimeout(() => {
                     setOrderModal(prev => !prev);
                     navigate('/profile', { replace: true });
@@ -71,13 +72,15 @@ const Order = ({ products }) => {
                             <option value="store">Забрать в магазине</option>
                             <option value="post-office">Забрать на почте</option>
                             <option value="house">Доставка на дом</option>
-                        </select></div>
-                        {
-                            isOrder === 'house' && <Input type='text' nameInput='Введите адресс' inputId='productName' holderTitle="Введите адресс доставки заказа" inputObject={_houseaddrres} />
-                        }
-                        {
-                            isOrder === 'post-office' && <Input type='text' nameInput='Введите отделение' inputId='productName' holderTitle="Введите отделение почты" inputObject={_postaddress} />
-                        }
+                        </select>
+                    </div>
+                    {
+                        isOrder === 'house' && <Input type='text' nameInput='Введите адресс' inputId='homeAddress' holderTitle="Введите адресс доставки заказа" inputObject={_houseaddrres} />
+                    }
+                    {
+                        isOrder === 'post-office' && <Input type='text' nameInput='Введите отделение' inputId='postAddress' holderTitle="Введите отделение почты" inputObject={_postaddress} />
+                    }
+                    <Input type='text' nameInput='Номер телефона' inputId='phoneNumber' holderTitle="Введите номер телефона" inputObject={_phonenumber} />
                     <div className="container-buttons">
                         <Button name="Заказать" func={() => { console.log('Create product'); }} />
                         <FontAwesomeIcon icon={faXmark} className="closemodal-icon" onClick={() => { setOrderModal(prev => !prev) }} />

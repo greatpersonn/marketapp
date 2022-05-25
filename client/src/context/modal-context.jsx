@@ -7,9 +7,10 @@ export const ModalProvider = (props) => {
     const [isEditModal, setEditModal] = useState(false);
     const [isInfoModal, setInfoModal] = useState(false);
     const [isOrderModal, setOrderModal] = useState(false);
+    const [isFeedback, setFeedbackModal] = useState(false);
 
     return(
-        <ModalContext.Provider value={{isAddModal, setAddModal, isEditModal, setEditModal, isInfoModal, setInfoModal, isOrderModal, setOrderModal}}>
+        <ModalContext.Provider value={{isAddModal, setAddModal, isEditModal, setEditModal, isInfoModal, setInfoModal, isOrderModal, setOrderModal, isFeedback, setFeedbackModal}}>
             {props.children}
         </ModalContext.Provider>
     )

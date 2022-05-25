@@ -1,0 +1,114 @@
+.container-orders {
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+
+    p {
+        font-size: 1.4rem;
+        font-weight: 500;
+    }
+
+    .container-order {
+        margin: 10px 0px;
+        width: 1000px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: flex-start;
+
+        box-sizing: border-box;
+        border: 3px solid rgb(245, 245, 245);
+
+        .order-info {
+            padding: 15px 10px;
+            width: 100%;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+            align-items: center;
+            gap: 20px;
+
+            box-sizing: border-box;
+
+            img {
+                width: 90px;
+                height: 90px;
+            }
+
+            p {
+                letter-spacing: 0.02rem;
+
+                &:nth-child(2) {
+                    font-size: 1.3rem;
+                    font-weight: 400;
+                }
+
+                &:nth-child(4) {
+                    font-size: 1.3rem;
+                    font-weight: 400;
+                }
+            }
+
+            a {
+                color: black;
+                font-size: 1.3rem;
+                font-weight: 400;
+                text-decoration: none;
+
+                &:hover {
+                    color: #d90429;
+                }
+            }
+
+            &:hover {
+                cursor: pointer;
+                background-color: rgb(245, 245, 245);
+            }
+        }
+
+        .order-products {
+            width: 100%;
+
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+
+            background-color: rgb(245, 245, 245);
+
+            ul {
+                font-size: 1.2rem;
+
+                li {
+                    padding: 5px 0px;
+                    margin: 0px 30px;
+
+                    font-size: 0.9rem;
+                    list-style-type: disc;
+                }
+            }
+
+            .order-option {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: flex-start;
+
+                label {
+                    font-size: 1.2rem;
+                }
+
+            }
+
+            button {
+                margin: 0px 15px;
+            }
+        }
+    }
+}

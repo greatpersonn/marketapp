@@ -13,7 +13,7 @@ const Navigation = () => {
             <NavLink to='/about'>О нас</NavLink>
             <NavLink to='/news'>Новости</NavLink>
             <NavLink to='/'>Товары</NavLink>
-            <NavLink to='/feedback'>Отзывы</NavLink>
+            <NavLink to='/feedbacks'>Отзывы</NavLink>
             <NavLink to='/contacts'>Контакты</NavLink>
             {
                 statusLogin ? <NavLink to="/profile">Личный кабинет</NavLink> : <NavLink to="/sign-in">Войти</NavLink>
