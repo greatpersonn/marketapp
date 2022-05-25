@@ -152,13 +152,13 @@ app.delete('/delete-user', async (req, res) => {
 app.put('/add-user-product', async (req, res) => {
     try {
         const { Userdata, Productdata } = req.body;
-
+        
         const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
-
+        
         if (!candidate) {
             return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
         }
-
+        
         await User.updateOne({ _id: Userdata._id }, {
             $push: {
                 userproducts: {
@@ -170,9 +170,9 @@ app.put('/add-user-product', async (req, res) => {
                 }
             }
         });
-
+        
         return res.status(201).json({ message: 'Продукт был добавлен пользователю!' });
-
+        
     } catch (error) {
         console.error(error);
     }
@@ -227,7 +227,7 @@ app.delete('/delete-user-product', async (req, res) => {
 /* USER ORDERS */
 app.post('/create-user-orders', async (req, res) => {
     try {
-        const { UserId, Products, OrderNum, OrderDate } = req.body;
+        const { UserId, Products, PhoneNumber, OrderNum, OrderDate } = req.body;
 
         const candidate = await User.find({ _id: UserId });
 
@@ -240,6 +240,7 @@ app.post('/create-user-orders', async (req, res) => {
                 userorders: {
                     ordernum: OrderNum,
                     orderproducts: Products,
+                    phonenumber: PhoneNumber,
                     orderstatus: 'Обработка',
                     orderdate: OrderDate
                 }
@@ -276,6 +277,67 @@ app.post('/get-user-orders', async (req, res) => {
             }
         })
 
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+app.get('/get-all-orders', async (req, res) => {
+    try {
+        const arrayOrders = [];
+        const allUsers = await User.find();
+
+        for (let user in allUsers) {
+            for (let order in allUsers[user].userorders) {
+                arrayOrders.push(allUsers[user].userorders[order]);
+            }
+        }
+
+        res.status(200).json({ orders: arrayOrders });
+    } catch (error) {
+        console.error(error)
+    }
+});
+
+app.post('/update-order', async (req, res) => {
+    try {
+        let userData, userOrderNum, userOrder;
+        const { Order, Status } = req.body;
+        const allUsers = await User.find();
+
+        for (let user in allUsers) {
+            for (let order in allUsers[user].userorders) {
+                if (Order.ordernum === allUsers[user].userorders[order].ordernum) {
+                    userData = allUsers[user];
+                    userOrder = allUsers[user].userorders[order];
+                    userOrderNum = allUsers[user].userorders[order].ordernum;
+                }
+            }
+        }
+
+        userOrder.orderstatus = Status;
+
+        await User.updateOne({ _id: userData._id }, {
+            $pull: {
+                userorders: {
+                    ordernum: userOrderNum
+                }
+            }
+        });
+
+        await User.updateOne({ _id: userData._id }, {
+            $push: {
+                userorders: {
+                    ordernum: userOrder.ordernum,
+                    orderproducts: userOrder.orderproducts,
+                    phonenumber: userOrder.phonenumber,
+                    orderstatus: userOrder.orderstatus,
+                    orderdate: userOrder.orderdate
+                }
+            }
+        });
+
+        res.status(200).json({ message: 'Статус заказа был изменён!' });
     } catch (error) {
         console.error(error);
     }
@@ -384,6 +446,52 @@ app.get('/get-products', async (req, res) => {
     }
 });
 
+/* FEEDBACKS */
+app.put('/create-user-feedback', async (req, res) => {
+    try {
+        const { OrderNum, Userdata, Feedback } = req.body;
+
+        const user = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
+
+        if (!user) {
+            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+        }
+
+        await User.updateOne({ _id: Userdata._id }, {
+            $push: {
+                userfeedbacks: {
+                    name: Feedback.Username,
+                    surname: Feedback.Usersurname,
+                    phonenumber: Feedback.Usernumber,
+                    feedback: Feedback.Feedback,
+                    date: Feedback.Date,
+                    ordernum: OrderNum,
+                }
+            }
+        });
+
+        return res.status(201).json({ message: 'Отзыв был создан!' });
+
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+app.get('/get-all-feedbacks', async (req, res) => {
+    try {
+        const arrayFeedbacks = [];
+        const allUsers = await User.find();
+
+        for (let user in allUsers) {
+            for (let feedback in allUsers[user].userfeedbacks) {
+                arrayFeedbacks.push(allUsers[user].userfeedbacks[feedback]);
+            }
+        }
+        res.status(200).json({ feedbacks: arrayFeedbacks });
+    } catch (error) {
+        console.error(error)
+    }
+});
 
 // Functiion for starting server
 const start = async () => {

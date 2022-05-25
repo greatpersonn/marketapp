@@ -6,6 +6,7 @@ const schema = new Schema({
     userpass: { type: String, required: true  },
     userrole: { type: String, required: true  },
     userimage: { type: String, required: true },
+    userfeedbacks: [{ type: Object, required: true }],
     userproducts: [{ type: Object, required: true }],
     userorders: [{ type: Object, required: true }]
 }); 
