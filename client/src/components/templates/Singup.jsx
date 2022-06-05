@@ -47,6 +47,8 @@ const SignUp = () => {
 
                 const jsonData = await response.json();
 
+                console.log(jsonData)
+
                 if(!jsonData.error) {
                     localStorage.setItem('user', JSON.stringify(jsonData.user));
                     localStorage.setItem('status_login', JSON.stringify(true));

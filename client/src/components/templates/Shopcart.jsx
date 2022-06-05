@@ -27,7 +27,9 @@ const Shopcart = () => {
 
         const jsonData = await response.json();
 
-        setProducts(jsonData.products.userproducts);
+        console.log(jsonData)
+
+        setProducts(jsonData.products);
     }
 
     useEffect(() => {

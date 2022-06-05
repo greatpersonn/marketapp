@@ -23,12 +23,6 @@ const Header = () => {
                 <div className="container-headweb">
                     <NavLink to='/'>MIRTA</NavLink>
                 </div>
-                <div className="container-option">
-                    <Switch />
-                    {
-                        switchTheme ? <i className="fas fa-moon"></i> : <i className="fas fa-sun"></i>
-                    }
-                </div>
             </div>
         </header>
     );

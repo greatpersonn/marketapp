@@ -1,4 +1,6 @@
-// Models for Database
+require('dotenv').config();
+
+// Models for Database MongoDB
 const { User } = require('./models/User');
 const { Product } = require('./models/Product');
 const { News } = require('./models/News');
@@ -9,6 +11,7 @@ const fileUpload = require('express-fileupload');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
+const pool = require('./database');
 
 // Settings
 const PORT = process.env.PORT || 5000;
@@ -27,32 +30,52 @@ app.post('/user-register', async (req, res) => {
 
         const { Username, Useremail, Userpassword, Userrole } = req.body;
 
-        const canditate = await User.findOne({ username: Username, useremail: Useremail });
+        // const canditate = await User.findOne({ username: Username, useremail: Useremail });
 
-        if (canditate) {
-            return res.status(400).json({ error: { message: `Такой пользователь уже существует!` } });
-        }
+        // if (canditate) {
+        //     return res.status(400).json({ error: { message: `Такой пользователь уже существует!` } });
+        // }
 
         const hashPassword = await bcrypt.hash(Userpassword, 10);
 
-        const newUser = new User({
-            username: Username,
-            useremail: Useremail,
-            userpass: hashPassword,
-            userrole: Userrole,
-            userimage: 'defaultUser.png'
-        });
+        const users = await pool.query("SELECT * FROM Users");
+        for (let i = 0; i < users.rowCount; i++) {
+            if (users.rows[i].useremail === Useremail || users.rows[i].username === Username) {
+                return res.status(400).json({ error: { message: `Такой пользователь уже существует!` } });
+            }
+        }
 
-        await newUser.save();
+        await pool.query("INSERT INTO Users (username, userpassword, useremail, userrole, userimage, userfeedbacks, userproducts, userorders) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)", [Username, hashPassword, Useremail, Userrole, 'defaultUser.png', [], [], []]);
+        const userData = await pool.query("SELECT * FROM Users WHERE useremail = $1", [Useremail]);
+
         return res.status(201).json({
             user: {
-                _id: newUser._id,
-                username: newUser.username,
-                useremail: newUser.useremail,
-                userrole: newUser.userrole,
-                userimage: newUser.userimage
+                _id: userData.rows[0].userid,
+                username: userData.rows[0].username,
+                useremail: userData.rows[0].useremail,
+                userrole: userData.rows[0].userrole,
+                userimage: userData.rows[0].userimage
             }
         });
+
+        // const newUser = new User({
+        //     username: Username,
+        //     useremail: Useremail,
+        //     userpass: hashPassword,
+        //     userrole: Userrole,
+        //     userimage: 'defaultUser.png'
+        // });
+
+        // await newUser.save();
+        // return res.status(201).json({
+        //     user: {
+        //         _id: newUser._id,
+        //         username: newUser.username,
+        //         useremail: newUser.useremail,
+        //         userrole: newUser.userrole,
+        //         userimage: newUser.userimage
+        //     }
+        // });
 
     } catch (error) {
         console.error(error);
@@ -67,27 +90,34 @@ app.post('/user-login', async (req, res) => {
         }
 
         const { Useremail, Userpassword } = req.body;
-        const user = await User.findOne({ useremail: Useremail });
+        // const user = await User.findOne({ useremail: Useremail });
 
-        if (!user) {
+        // if (!user) {
+        //     return res.status(400).json({ error: { message: 'Не могу найти пользователя с такой почтой!' } });
+        // }
+
+
+        const user = await pool.query("SELECT * FROM Users WHERE useremail = $1", [Useremail]);
+
+        if (user.rowCount === 0) {
             return res.status(400).json({ error: { message: 'Не могу найти пользователя с такой почтой!' } });
-        }
-
-        const isMatchPass = await bcrypt.compare(Userpassword, user.userpass);
-
-        if (!isMatchPass) {
-            return res.status(400).json({ error: { message: 'Неправильный пароль!' } });
-        }
-
-        return res.status(201).json({
-            user: {
-                _id: user._id,
-                username: user.username,
-                useremail: user.useremail,
-                userrole: user.userrole,
-                userimage: user.userimage
+        } else {
+            const isMatchPass = await bcrypt.compare(Userpassword, user.rows[0].userpassword);
+            if (isMatchPass) {
+                const userData = user.rows[0];
+                return res.status(201).json({
+                    user: {
+                        _id: userData.userid,
+                        username: userData.username,
+                        useremail: userData.useremail,
+                        userrole: userData.userrole,
+                        userimage: userData.userimage
+                    }
+                })
             }
-        })
+        }
+
+
     } catch (error) {
         console.error(error);
         return res.status(500).json({ error: { messeage: 'Ошибка сервера, ответа нет!' } });
@@ -96,7 +126,9 @@ app.post('/user-login', async (req, res) => {
 
 app.get('/get-users', async (req, res) => {
     try {
-        const users = await User.find();
+        // const users = await User.find();
+        const users = await pool.query('SELECT * FROM Users');
+        // res.status(200).json({users: allUsers.rows});
         return res.status(201).json({ users: users });
     } catch (e) {
         return res.status(500).json({ errors: [{ message: `Ошибка сервера, статус 500!` }] });
@@ -107,19 +139,25 @@ app.put('/edit-user', async (req, res) => {
     try {
         const { Editname, Editemail, Editrole, Editeduser } = req.body;
 
-        const user = await User.find({ _id: Editeduser._id, username: Editeduser.username, useremail: Editeduser.useremail });
+        // const user = await User.find({ _id: Editeduser._id, username: Editeduser.username, useremail: Editeduser.useremail });
 
-        if (!user) {
+        // if (!user) {
+        //     return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+        // }
+
+        // await User.updateOne({ _id: Editeduser._id }, {
+        //     $set: {
+        //         username: Editname,
+        //         useremail: Editemail,
+        //         userrole: Editrole,
+        //     }
+        // });
+
+        const user = await pool.query('UPDATE users SET UserName = $1, UserRole = $2, UserEmail = $3 WHERE UserId = $4', [Editname, Editrole, Editemail, Editeduser]);
+
+        if (user.rowCount === 0) {
             return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
         }
-
-        await User.updateOne({ _id: Editeduser._id }, {
-            $set: {
-                username: Editname,
-                useremail: Editemail,
-                userrole: Editrole,
-            }
-        });
 
         return res.status(201).json({ message: 'Пользователь был обновлён!' });
 
@@ -131,17 +169,24 @@ app.put('/edit-user', async (req, res) => {
 app.delete('/delete-user', async (req, res) => {
     try {
         const data = req.body;
-        const user = await User.findOne({ _id: data._id });
+        // const user = await User.findOne({ _id: data._id });
 
-        if (!user) {
+        // if (!user) {
+        //     return res.status(404).json({ errors: [{ message: `Такой пользователь не найден!` }] });
+        // }
+
+        // if (!data._id) {
+        //     return res.status(404).json({ errors: [{ message: `Такого ID не существует!` }] });
+        // }
+
+        // await User.deleteOne({ _id: data._id });
+
+        const user = await pool.query('DELETE FROM Users WHERE UserId = $1', [data._id]);
+
+        if (user.rowCount === 0) {
             return res.status(404).json({ errors: [{ message: `Такой пользователь не найден!` }] });
         }
 
-        if (!data._id) {
-            return res.status(404).json({ errors: [{ message: `Такого ID не существует!` }] });
-        }
-
-        await User.deleteOne({ _id: data._id });
         return res.status(201).json({ message: `Пользователь был удалён!` });
     } catch (error) {
         console.error(error);
@@ -151,28 +196,52 @@ app.delete('/delete-user', async (req, res) => {
 /* USER PRODUCTS */
 app.put('/add-user-product', async (req, res) => {
     try {
+        const Arrayproducts = [];
         const { Userdata, Productdata } = req.body;
-        
-        const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
-        
-        if (!candidate) {
+
+        const objProduct = {
+            productname: Productdata.productname,
+            productkey: Productdata.productkey,
+            productprice: Productdata.productprice,
+            productdesc: Productdata.productdesc,
+            productimage: Productdata.productimage,
+        }
+
+        const user = await pool.query('SELECT * FROM Users WHERE UserID = $1', [Userdata._id]);
+
+        if (user.rowCount === 0) {
             return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
         }
-        
-        await User.updateOne({ _id: Userdata._id }, {
-            $push: {
-                userproducts: {
-                    productname: Productdata.productname,
-                    productkey: Productdata.productkey,
-                    productprice: Productdata.productprice,
-                    productdesc: Productdata.productdesc,
-                    productimage: Productdata.productimage,
-                }
-            }
-        });
-        
+
+        if (user.rows[0].userproducts.length <= 0) {
+            Arrayproducts.push(objProduct);
+        }
+
+        user.rows[0].userproduct.push('1');
+
+
+        await pool.query('UPDATE users SET UserProducts = $1 WHERE UserId = $2', [Arrayproducts, Userdata._id]);
+
+        // const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
+
+        // if (!candidate) {
+        //     return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+        // }
+
+        // await User.updateOne({ _id: Userdata._id }, {
+        //     $push: {
+        //         userproducts: {
+        //             productname: Productdata.productname,
+        //             productkey: Productdata.productkey,
+        //             productprice: Productdata.productprice,
+        //             productdesc: Productdata.productdesc,
+        //             productimage: Productdata.productimage,
+        //         }
+        //     }
+        // });
+
         return res.status(201).json({ message: 'Продукт был добавлен пользователю!' });
-        
+
     } catch (error) {
         console.error(error);
     }
@@ -182,17 +251,27 @@ app.post('/get-user-products', async (req, res) => {
     try {
         const { Userdata } = req.body;
 
-        const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
+        // const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
 
-        if (!candidate) {
+        // if (!candidate) {
+        //     return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+        // }
+
+        const user = await pool.query('SELECT * FROM Users WHERE UserID = $1', [Userdata._id]);
+
+        if (user.rowCount === 0) {
             return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
         }
 
-        return res.status(201).json({
-            products: {
-                userproducts: candidate[0].userproducts
-            }
-        })
+        console.log(JSON.parse(user.rows[0].userproducts.toString()))
+
+        // const userproducts = JSON.parse(user.rows[0].userproducts);
+
+        // return res.status(201).json({
+        //     products: {
+        //         userproducts
+        //     }
+        // })
 
     } catch (error) {
         console.error(error);
@@ -265,15 +344,19 @@ app.post('/get-user-orders', async (req, res) => {
     try {
         const { Userdata } = req.body;
 
-        const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
+        // const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
 
-        if (!candidate) {
-            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
-        }
+        // if (!candidate) {
+        //     return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+        // }
+
+        const userorders = [
+            {}
+        ];
 
         return res.status(201).json({
             orders: {
-                userorders: candidate[0].userorders
+                userorders: userorders
             }
         })
 
