@@ -3,18 +3,20 @@ import { NavLink } from 'react-router-dom';
 
 import Button from '../atoms/Button';
 import Create from '../templates/Create';
+import NewsModal from '../templates/NewsModal';
 
 import { AuthContext } from '../../context/auth-context';
 import { ModalContext } from '../../context/modal-context';
 
 import './admin.scss';
+import Navigation from '../organisms/Navigation';
 
 const Admin = () => {
     const [isLoading, setLoading] = useState(false);
     const [user, setUser] = useState({ userimage: 'defaultUser.png', username: '', useremail: '', userrole: 'User' });
 
     const { statusLogin } = useContext(AuthContext);
-    const { isAddModal, setAddModal } = useContext(ModalContext);
+    const { isAddModal, setAddModal, isNews, setNewsModal } = useContext(ModalContext);
 
 
     const handleLoadData = async () => {
@@ -30,12 +32,17 @@ const Admin = () => {
         setAddModal(prev => !prev);
     }
 
+    const handleAddNews = () => {
+        setNewsModal(prev => !prev);
+    }
+
     useEffect(() => {
         handleLoadData();
     }, []);
 
     return (
         <>
+            <Navigation />
             <div className="container-adminpanel">
                 <p>Админ-панель</p>
                 <p>Добро пожаловать в админ-панель, {user.username}, хорошей работы!</p>
@@ -46,6 +53,7 @@ const Admin = () => {
                                 {
                                     <div className="title-moder">
                                         <Button name='Добавить продукт' func={() => { handleAddProduct() }} />
+                                        <Button name='Добавить новость' func={() => { handleAddNews() }} />
                                         <NavLink to='/users'>Список пользователей</NavLink>
                                         <NavLink to='/orders'>Активные заказы</NavLink>
                                     </div>
@@ -60,6 +68,10 @@ const Admin = () => {
 
             {
                 isAddModal && <Create />
+            }
+
+            {
+                isNews && <NewsModal />
             }
         </>
     );
