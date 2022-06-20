@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import Loader from '../atoms/Loader';
+import Navigation from '../organisms/Navigation';
 
 import './feedbacks.scss';
 
@@ -25,32 +26,35 @@ const Feedbacks = () => {
     }
 
     useEffect(() => {
-        handleLoadData();   
+        handleLoadData();
     }, []);
 
     return (
-        <div className="container-feedbacks">
-            {isLoading && <Loader />}
-            <p>Список отзывов</p>
-            {
-                feedbacks.map((feedback, id) => (
-                    <div className="feedback-info" key={id}>
-                        <div className="info-order">
-                            <p>Отзыв о заказе: <span>№{feedback.ordernum}</span></p>
+        <>
+            <Navigation />
+            <div className="container-feedbacks">
+                {isLoading && <Loader />}
+                <p>Список отзывов</p>
+                {
+                    feedbacks.map((feedback, id) => (
+                        <div className="feedback-info" key={id}>
+                            <div className="info-order">
+                                <p>Отзыв о заказе: <span>№{feedback.ordernum}</span></p>
+                            </div>
+                            <div className="info-user">
+                                <p>{feedback.name}</p>
+                                <p>{feedback.surname}</p>
+                                <p>{feedback.date}</p>
+                            </div>
+                            <div className="info-feedback">
+                                <p>Отзыв:</p>
+                                <p>{feedback.feedback}</p>
+                            </div>
                         </div>
-                        <div className="info-user">
-                            <p>{feedback.name}</p>
-                            <p>{feedback.surname}</p>
-                            <p>{feedback.date}</p>
-                        </div>
-                        <div className="info-feedback">
-                            <p>Отзыв:</p>
-                            <p>{feedback.feedback}</p>
-                        </div>
-                    </div>
-                ))
-            }
-        </div>
+                    ))
+                }
+            </div>
+        </>
     );
 }
 

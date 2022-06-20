@@ -1,21 +1,24 @@
 .container-newscard {
-    padding: 20px 10px;
+    padding: 20px 20px;
     width: 100%;
-
+    
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     align-items: flex-start;
+    
+    background-color: rgb(243, 243, 243);
+    border-radius: 25px;
 
     img {
-        width: 230px;
-        height: 200px;
+        padding: 10px;
+        width: 150px;
+        height: 150px;
     }
 
     .news-info {
         width: 90%;
         margin: 0px 15px;
-
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -24,14 +27,17 @@
             margin: 0;
 
             &:nth-child(1) {
+                padding: 2px 0px;
                 font-size: 1.6rem;
             }
 
             &:nth-child(2) {
+                padding: 8px 0px;
                 font-size: 1.3rem;
             }
 
             &:nth-child(3) {
+                padding: 2px 0px;
                 font-size: 1.1rem;
             }
         }

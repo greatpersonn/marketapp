@@ -31,7 +31,7 @@ const Products = () => {
         });
 
         const jsonData = await response.json();
-        setProduct(jsonData.products);
+        setProduct(jsonData.products.reverse());
         setLoading(false);
     }
 
