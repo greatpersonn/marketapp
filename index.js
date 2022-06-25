@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 // Models for Database
 const { User } = require('./models/User');
 const { Product } = require('./models/Product');
@@ -496,7 +498,7 @@ app.get('/get-all-feedbacks', async (req, res) => {
 // Functiion for starting server
 const start = async () => {
     try {
-        await mongoose.connect('mongodb+srv://shopopalo:Var54321@cluster0.qvze0.mongodb.net/awesome?retryWrites=true&w=majority');
+        await mongoose.connect(`${process.env.MONGODB_URL}`);
         app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
     } catch (e) {
         console.error(e);
