@@ -56,17 +56,17 @@ const Create = () => {
         <form onSubmit={createProduct} className='form-modal'>
             <div className="main__modal-container">
                 <div className="container-info">
-                    <Input type='text' nameInput='Название товара' inputId='productName' holderTitle="Введите название товара..." inputObject={_productname} />
-                    <Input type='text' nameInput='Ключ товара' inputId='productKey' holderTitle="Введите ключ товара..." inputObject={_productkey} />
-                    <Input type='text' nameInput='Цена товара' inputId='productPrice' holderTitle="Введите цену товара..." inputObject={_productprice} />
-                    <Input type='text' nameInput='Описание товара' inputId='productDesc' holderTitle="Введите описание товара..." inputObject={_productdesc} />
-                    <Input type='text' nameInput='Дата добавления товара' inputId='dateAdded' holderTitle="Введите дату (дд/мм/гггг)..." inputObject={_dateadded} />
+                    <Input type='text' nameInput='Найменування товару' inputId='productName' holderTitle="Введіть назву товару..." inputObject={_productname} />
+                    <Input type='text' nameInput='Код товару' inputId='productKey' holderTitle="Введіть код товару..." inputObject={_productkey} />
+                    <Input type='text' nameInput='Ціна на товар' inputId='productPrice' holderTitle="Введіть ціну товару..." inputObject={_productprice} />
+                    <Input type='text' nameInput='Додайте опис товару' inputId='productDesc' holderTitle="Введіть опис товару..." inputObject={_productdesc} />
+                    <Input type='text' nameInput='Дата створення товару' inputId='dateAdded' holderTitle="Введіть дату (дд/мм/рррр)..." inputObject={_dateadded} />
                     <div className="uploader__container">
                         <input type="file" name="uploader" id="fileuploader" onChange={(e) => { changeHandler(e); }}/>
-                        <button>Добавить изображение</button>
+                        <button>Додати картинку</button>
                     </div>
                     <div className="container-buttons">
-                        <Button name="Создать" func={() => { console.log('Create product'); }} />
+                        <Button name="Створити" func={() => { console.log('Create product'); }} />
                         <FontAwesomeIcon icon={faXmark} className="closemodal-icon" onClick={() => { setAddModal(prev => !prev) }} />
                     </div>
                 </div>

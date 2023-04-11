@@ -14,20 +14,20 @@ const Ordercard = ({ order }) => {
         <>
             <div className="container-ordercard">
                 <div className="ordercard-info">
-                    {order.orderstatus === 'Обработка' && <img src={require('../../assets/images/orderstatus/system.png')} alt="statusImage" />}
-                    {order.orderstatus === 'Подтверждён' && <img src={require('../../assets/images/orderstatus/confirmation.png')} alt="statusImage" />}
-                    {order.orderstatus === 'Комплектуется' && <img src={require('../../assets/images/orderstatus/teamwork.png')} alt="statusImage" />}
-                    {order.orderstatus === 'Ожидает клиента' && <img src={require('../../assets/images/orderstatus/wait.png')} alt="statusImage" />}
-                    {order.orderstatus === 'Выполнен' && <img src={require('../../assets/images/orderstatus/success.png')} alt="statusImage" />}
-                    {order.orderstatus === 'Доставлен' && <img src={require('../../assets/images/orderstatus/shipped.png')} alt="statusImage" />}
+                    {order.orderstatus === 'В обробці' && <img src={require('../../assets/images/orderstatus/system.png')} alt="statusImage" />}
+                    {order.orderstatus === 'Підтверджен' && <img src={require('../../assets/images/orderstatus/confirmation.png')} alt="statusImage" />}
+                    {order.orderstatus === 'Збирається' && <img src={require('../../assets/images/orderstatus/teamwork.png')} alt="statusImage" />}
+                    {order.orderstatus === 'Очікує клієнта' && <img src={require('../../assets/images/orderstatus/wait.png')} alt="statusImage" />}
+                    {order.orderstatus === 'Виконано' && <img src={require('../../assets/images/orderstatus/success.png')} alt="statusImage" />}
+                    {order.orderstatus === 'Доставлено' && <img src={require('../../assets/images/orderstatus/shipped.png')} alt="statusImage" />}
                     <p>{order.orderstatus}</p>
                     <p>№{order.ordernum}</p>
                     <p>{order.orderdate}</p>
                 </div>
                 {
-                    (order.orderstatus === 'Выполнен' || order.orderstatus === 'Доставлен') &&
+                    (order.orderstatus === 'Виконано' || order.orderstatus === 'Доставлено') &&
                     <div className="ordercard-feedback">
-                        <Button name='Оставить отзыв' func={() => setFeedbackModal(prev => !prev)} />
+                        <Button name='Залишити відгук' func={() => setFeedbackModal(prev => !prev)} />
                     </div>
                 }
             </div>

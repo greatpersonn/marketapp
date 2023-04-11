@@ -10,13 +10,13 @@ const Navigation = () => {
 
     return ( 
         <div className="title-navigation">
-            <NavLink to='/about'>О нас</NavLink>
-            <NavLink to='/news'>Новости</NavLink>
-            <NavLink to='/'>Товары</NavLink>
-            <NavLink to='/feedbacks'>Отзывы</NavLink>
-            <NavLink to='/contacts'>Контакты</NavLink>
+            <NavLink to='/about'>Про нас</NavLink>
+            <NavLink to='/news'>Новини</NavLink>
+            <NavLink to='/'>Каталог</NavLink>
+            <NavLink to='/feedbacks'>Відгуки</NavLink>
+            <NavLink to='/contacts'>Контакти</NavLink>
             {
-                statusLogin ? <NavLink to="/profile">Личный кабинет</NavLink> : <NavLink to="/sign-in">Войти</NavLink>
+                statusLogin ? <NavLink to="/profile">Особистий кабінет</NavLink> : <NavLink to="/sign-in">Ввійти в кабінет</NavLink>
             }
         </div>
     );

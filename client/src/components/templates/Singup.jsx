@@ -1,5 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faKey, faAt, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
 
 import Input from "../atoms/Input";
 import Button from "../atoms/Button";
@@ -65,13 +67,25 @@ const SignUp = () => {
     return (
         <div className="container-signup">
             <form onSubmit={(e) => handleSubmit(e)}>
-                <div className="signin-headtext">Регистрация</div>
-                <Input type='text' nameInput='Логин' holderTitle='Введите ваш логин' inputObject={_username} inputId='username' />
-                <Input type='email' nameInput='Почта' holderTitle='Введите вашу почту' inputObject={_useremail} inputId='useremail' />
-                <Input type='password' nameInput='Пароль' holderTitle='Введите ваш пароль' inputObject={_userpass} inputId='userpass' />
-                <Input type='password' nameInput='Подтвердите пароль' holderTitle='Повторите пароль' inputObject={_confpass} inputId='confpass' />
-                <Button name='Создать аккаунт' func={() => { console.log('Регистация пользователя'); }} />
-                <NavLink to='/sign-in'>Уже есть аккаунт?</NavLink>
+                <div className="signin-headtext">Реєстрація</div>
+                <div className="wrap_input">
+                    <Input type='text' nameInput='Логін' holderTitle='Введіть ваш логін...' inputObject={_username} inputId='username' />
+                    <FontAwesomeIcon icon={faUser} />
+                </div>
+                <div className="wrap_input">
+                    <Input type='email' nameInput='Електронна пошта' holderTitle='Введіть вашу пошту...' inputObject={_useremail} inputId='useremail' />
+                    <FontAwesomeIcon icon={faAt} />
+                </div>
+                <div className="wrap_input">
+                    <Input type='password' nameInput='Пароль' holderTitle='Введіть ваш пароль...' inputObject={_userpass} inputId='userpass' />
+                    <FontAwesomeIcon icon={faKey} />
+                </div>
+                <div className="wrap_input">
+                    <Input type='password' nameInput='Підтвердити пароль' holderTitle='Повторно введіть пароль...' inputObject={_confpass} inputId='confpass' />
+                    <FontAwesomeIcon icon={faUnlockKeyhole} />
+                </div>
+                <Button name='Створити акаунт' func={() => { console.log('Регистация пользователя'); }} />
+                <NavLink to='/sign-in'>Вже плаваєте у нас?</NavLink>
             </form>
         </div>
     );

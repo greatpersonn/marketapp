@@ -17,7 +17,7 @@ const Search = () => {
     return (
         <div className="title-search">
             <form onSubmit={handleSubmit}>
-                <Input type='text' nameInput='Что-то ищете?' holderTitle='Введите запрос для поиска' inputObject={_search} inputId='search' />
+                <Input type='text' nameInput='Може щось знайти треба?' holderTitle='Введіть запит для пошуку' inputObject={_search} inputId='search' />
                 <FontAwesomeIcon icon={faSearch} />
             </form>
         </div>

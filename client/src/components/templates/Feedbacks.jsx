@@ -34,12 +34,12 @@ const Feedbacks = () => {
             <Navigation />
             <div className="container-feedbacks">
                 {isLoading && <Loader />}
-                <p>Список отзывов</p>
+                <p>Відгуки</p>
                 {
                     feedbacks.map((feedback, id) => (
                         <div className="feedback-info" key={id}>
                             <div className="info-order">
-                                <p>Отзыв о заказе: <span>№{feedback.ordernum}</span></p>
+                                <p>Відгук на замовлення: <span>№{feedback.ordernum}</span></p>
                             </div>
                             <div className="info-user">
                                 <p>{feedback.name}</p>
@@ -47,7 +47,7 @@ const Feedbacks = () => {
                                 <p>{feedback.date}</p>
                             </div>
                             <div className="info-feedback">
-                                <p>Отзыв:</p>
+                                <p>Відгук:</p>
                                 <p>{feedback.feedback}</p>
                             </div>
                         </div>

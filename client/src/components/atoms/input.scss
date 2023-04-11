@@ -20,7 +20,7 @@
 
         border: none;
         outline: none;
-        background: #e2e2dd;
+        background: #ffffff;
         border-radius: 15px;
       
         color: rgba(26, 26, 26, 0.7);
@@ -38,7 +38,7 @@
         }
 
         &:focus {
-            outline: 2px solid #d90429;
+            outline: 2px solid #159895;
 
             &::placeholder {
                 transition: .5s all;

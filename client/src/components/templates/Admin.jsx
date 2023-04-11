@@ -44,18 +44,18 @@ const Admin = () => {
         <>
             <Navigation />
             <div className="container-adminpanel">
-                <p>Админ-панель</p>
-                <p>Добро пожаловать в админ-панель, {user.username}, хорошей работы!</p>
+                <p>Панель адміністратора сайту</p>
+                <p>Привіт, {user.username}, ти авторизувався як адміністратор, можешь виконувати свою роботу, успіхів!</p>
                 {
                     statusLogin ?
                         user.userrole === 'Admin' || user.userrole === 'Moderator' || user.userrole === 'Operator' ?
                             <>
                                 {
                                     <div className="title-moder">
-                                        <Button name='Добавить продукт' func={() => { handleAddProduct() }} />
-                                        <Button name='Добавить новость' func={() => { handleAddNews() }} />
-                                        <NavLink to='/users'>Список пользователей</NavLink>
-                                        <NavLink to='/orders'>Активные заказы</NavLink>
+                                        <Button name='Додати товар' func={() => { handleAddProduct() }} />
+                                        <Button name='Додати новину' func={() => { handleAddNews() }} />
+                                        <NavLink to='/users'>Список користувачів</NavLink>
+                                        <NavLink to='/orders'>Статус замовлення</NavLink>
                                     </div>
                                 }
                             </>

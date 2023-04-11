@@ -1,4 +1,6 @@
 import { useContext, useState } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
@@ -73,6 +75,7 @@ const NewsModal = () => {
                         <button>Добавить изображение</button>
                     </div>
                     <Button name="Создать новость" func={() => { console.log('Create news!'); }} />
+                    <FontAwesomeIcon icon={faXmark} className="closemodal-icon" onClick={() => { setNewsModal(prev => !prev) }} />
                 </div>
             </div>
         </form>

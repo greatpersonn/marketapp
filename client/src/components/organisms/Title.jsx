@@ -7,11 +7,9 @@ import './title.scss';
 const Title = () => {
     return (
         <div className="container-title">
-            <div className="title-leftside">
-                <Logo />
-                <Search />
-            </div>
+            <Logo />
             <Navigation />
+            <Search />
         </div>
     );
 }

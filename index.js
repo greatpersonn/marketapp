@@ -22,7 +22,7 @@ app.use(cors());
 app.post('/user-register', async (req, res) => {
     try {
         if (!req.body) {
-            return res.status(400).json({ error: { message: 'Данные не получены или они не существуют!' } });
+            return res.status(400).json({ error: { message: 'Дані не були отримані або вони не існують!' } });
         }
 
         const { Username, Useremail, Userpassword, Userrole } = req.body;
@@ -30,7 +30,7 @@ app.post('/user-register', async (req, res) => {
         const canditate = await User.findOne({ username: Username, useremail: Useremail });
 
         if (canditate) {
-            return res.status(400).json({ error: { message: `Такой пользователь уже существует!` } });
+            return res.status(400).json({ error: { message: `Такого користувача не існує!` } });
         }
 
         const hashPassword = await bcrypt.hash(Userpassword, 10);
@@ -56,27 +56,27 @@ app.post('/user-register', async (req, res) => {
 
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: { messeage: 'Ошибка сервера, ответа нет!' } });
+        return res.status(500).json({ error: { messeage: 'Помилка севрвера, відповіді нема!' } });
     }
 });
 
 app.post('/user-login', async (req, res) => {
     try {
         if (!req.body) {
-            return res.status(400).json({ error: { message: 'Данные не получены или они не существуют!' } });
+            return res.status(400).json({ error: { message: 'Дані не були отримані або вони не існують!' } });
         }
 
         const { Useremail, Userpassword } = req.body;
         const user = await User.findOne({ useremail: Useremail });
 
         if (!user) {
-            return res.status(400).json({ error: { message: 'Не могу найти пользователя с такой почтой!' } });
+            return res.status(400).json({ error: { message: 'Користувача з такою поштою не існує!' } });
         }
 
         const isMatchPass = await bcrypt.compare(Userpassword, user.userpass);
 
         if (!isMatchPass) {
-            return res.status(400).json({ error: { message: 'Неправильный пароль!' } });
+            return res.status(400).json({ error: { message: 'Неправильний пароль!' } });
         }
 
         return res.status(201).json({
@@ -85,12 +85,17 @@ app.post('/user-login', async (req, res) => {
                 username: user.username,
                 useremail: user.useremail,
                 userrole: user.userrole,
-                userimage: user.userimage
+                userimage: user.userimage,
+                name: user.name,
+                surname: user.surname,
+                postalcode: user.postalcode,
+                phone: user.phone,
+                city: user.city,
             }
         })
     } catch (error) {
         console.error(error);
-        return res.status(500).json({ error: { messeage: 'Ошибка сервера, ответа нет!' } });
+        return res.status(500).json({ error: { messeage: 'Помилка сервера, відповіді нема!' } });
     }
 });
 
@@ -99,7 +104,7 @@ app.get('/get-users', async (req, res) => {
         const users = await User.find();
         return res.status(201).json({ users: users });
     } catch (e) {
-        return res.status(500).json({ errors: [{ message: `Ошибка сервера, статус 500!` }] });
+        return res.status(500).json({ errors: [{ message: `Помилка сервера, статус помилки 500!` }] });
     }
 });
 
@@ -110,7 +115,7 @@ app.put('/edit-user', async (req, res) => {
         const user = await User.find({ _id: Editeduser._id, username: Editeduser.username, useremail: Editeduser.useremail });
 
         if (!user) {
-            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+            return res.status(400).json({ error: { message: 'Такого користувача не існує!' } });
         }
 
         await User.updateOne({ _id: Editeduser._id }, {
@@ -121,7 +126,35 @@ app.put('/edit-user', async (req, res) => {
             }
         });
 
-        return res.status(201).json({ message: 'Пользователь был обновлён!' });
+        return res.status(201).json({ message: 'Користувач був оновлений!' });
+
+    } catch (error) {
+        console.error(error);
+    }
+});
+
+app.put('/update-user-info', async (req, res) => {
+    try {
+        console.log(req.body);
+        const { UserId, Username, Usersurname, Usercity, Userpostalcode, Userphonenumber } = req.body;
+
+        const user = await User.find({ _id: UserId });
+
+        if (!user) {
+            return res.status(400).json({ error: { message: 'Такого користувача не існує!' } });
+        }
+
+        await User.updateOne({ _id: UserId }, {
+            $set: {
+                name: Username,
+                surname: Usersurname,
+                city: Usercity,
+                postalcode: Userpostalcode,
+                phone: Userphonenumber,
+            }
+        });
+
+        return res.status(201).json({ message: 'Особиста інформація була оновлена!' });
 
     } catch (error) {
         console.error(error);
@@ -134,15 +167,15 @@ app.delete('/delete-user', async (req, res) => {
         const user = await User.findOne({ _id: data._id });
 
         if (!user) {
-            return res.status(404).json({ errors: [{ message: `Такой пользователь не найден!` }] });
+            return res.status(404).json({ errors: [{ message: `Такого користувача не існує!` }] });
         }
 
         if (!data._id) {
-            return res.status(404).json({ errors: [{ message: `Такого ID не существует!` }] });
+            return res.status(404).json({ errors: [{ message: `Такого особистого ID користувача не існує!` }] });
         }
 
         await User.deleteOne({ _id: data._id });
-        return res.status(201).json({ message: `Пользователь был удалён!` });
+        return res.status(201).json({ message: `Користувач був видаленний з бази даних!` });
     } catch (error) {
         console.error(error);
     }
@@ -156,7 +189,7 @@ app.put('/add-user-product', async (req, res) => {
         const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
         
         if (!candidate) {
-            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+            return res.status(400).json({ error: { message: 'Такого користувача не існує!' } });
         }
         
         await User.updateOne({ _id: Userdata._id }, {
@@ -171,7 +204,7 @@ app.put('/add-user-product', async (req, res) => {
             }
         });
         
-        return res.status(201).json({ message: 'Продукт был добавлен пользователю!' });
+        return res.status(201).json({ message: 'Продукт був доданий до кошика користувача!' });
         
     } catch (error) {
         console.error(error);
@@ -185,7 +218,7 @@ app.post('/get-user-products', async (req, res) => {
         const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
 
         if (!candidate) {
-            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+            return res.status(400).json({ error: { message: 'Такого користувача не існує!' } });
         }
 
         return res.status(201).json({
@@ -205,7 +238,7 @@ app.delete('/delete-user-product', async (req, res) => {
         const candidate = await User.findOne({ _id: Userdata._id });
 
         if (!candidate) {
-            return res.status(400).json({ error: { message: 'Я не могу найти такого пользователя!' } });
+            return res.status(400).json({ error: { message: 'Такого користувача не існує!' } });
         }
 
         await User.updateOne({ _id: Userdata._id }, {
@@ -216,7 +249,7 @@ app.delete('/delete-user-product', async (req, res) => {
             }
         });
 
-        return res.status(201).json({ message: 'Предмет был удалёе!' });
+        return res.status(201).json({ message: 'Продукт був видалений з корзини користувача!' });
 
     } catch (error) {
         console.error(error);
@@ -232,7 +265,7 @@ app.post('/create-user-orders', async (req, res) => {
         const candidate = await User.find({ _id: UserId });
 
         if (!candidate) {
-            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+            return res.status(400).json({ error: { message: 'Такого користувача не існує!' } });
         }
 
         await User.updateOne({ _id: UserId }, {
@@ -241,7 +274,7 @@ app.post('/create-user-orders', async (req, res) => {
                     ordernum: OrderNum,
                     orderproducts: Products,
                     phonenumber: PhoneNumber,
-                    orderstatus: 'Обработка',
+                    orderstatus: 'В обробці',
                     orderdate: OrderDate
                 }
             },
@@ -254,7 +287,7 @@ app.post('/create-user-orders', async (req, res) => {
                 multi: true
             });
 
-        return res.status(201).json({ message: 'Заказ успешно оформлен!' });
+        return res.status(201).json({ message: 'Заказ був успішно опрацьован і створенний!' });
 
     } catch (error) {
         console.error(error);
@@ -268,7 +301,7 @@ app.post('/get-user-orders', async (req, res) => {
         const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
 
         if (!candidate) {
-            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+            return res.status(400).json({ error: { message: 'Такого користувача не існує!' } });
         }
 
         return res.status(201).json({
@@ -337,7 +370,7 @@ app.post('/update-order', async (req, res) => {
             }
         });
 
-        res.status(200).json({ message: 'Статус заказа был изменён!' });
+        res.status(200).json({ message: 'Статус замовлення був зміненний модератором!' });
     } catch (error) {
         console.error(error);
     }
@@ -348,7 +381,7 @@ app.post('/update-order', async (req, res) => {
 app.post('/create-news', async (req, res) => {
     try {
         if (!req.files) {
-            res.status(400).json({ error: 'Файл не был загружен или найден! ' });
+            res.status(400).json({ error: 'Файл не був завантажений чи завантажений з помилкою!' });
         }
 
         const file = req.files.file;
@@ -359,7 +392,7 @@ app.post('/create-news', async (req, res) => {
                 return res.status(500).send(err);
             }
 
-            res.status(201).json({ message: 'Файл загружен!', fileName: file.name, filePath: `/news/${file.name}` })
+            res.status(201).json({ message: 'Файл завантажений!', fileName: file.name, filePath: `/news/${file.name}` })
         });
 
         const { newsHeader, newsTitle, newsContent, newsAuthor, newsDate } = req.body;
@@ -367,7 +400,7 @@ app.post('/create-news', async (req, res) => {
         const article = await News.findOne({ newsheader: newsHeader });
 
         if (article) {
-            return res.status(400).json({ errors: { message: `Новость с таким заголовком уже существует!` } });
+            return res.status(400).json({ errors: { message: `Новина з таким заголовком вже існує!` } });
         }
 
         const newArticle = new News({
@@ -391,7 +424,7 @@ app.get('/get-news', async (req, res) => {
         const news = await News.find();
         return res.status(201).json({ articles: news });
     } catch (e) {
-        return res.status(500).json({ errors: [{ message: `Ошибка сервера, статус 500!` }] });
+        return res.status(500).json({ errors: [{ message: `Помилка сервера, статус севрера 500!` }] });
     }
 })
 
@@ -399,7 +432,7 @@ app.get('/get-news', async (req, res) => {
 app.post('/create-product', async (req, res) => {
     try {
         if (!req.files) {
-            res.status(400).json({ error: 'Файл не был загружен или найден! ' });
+            res.status(400).json({ error: 'Файл не був завантажений чи завантажений з помилкою!' });
         }
 
         const file = req.files.file;
@@ -410,7 +443,7 @@ app.post('/create-product', async (req, res) => {
                 return res.status(500).send(err);
             }
 
-            res.status(201).json({ message: 'Герой успешно создан!', fileName: file.name, filePath: `/products/${file.name}` })
+            res.status(201).json({ message: 'Файл завантажений!', fileName: file.name, filePath: `/products/${file.name}` })
         });
 
         const { productName, productKey, productPrice, productDesc, dateAdded } = req.body;
@@ -418,7 +451,7 @@ app.post('/create-product', async (req, res) => {
         const canditate = await Product.findOne({ productname: productName, productkey: productKey });
 
         if (canditate) {
-            return res.status(400).json({ errors: { message: `Такой герой уже существует, может другого добавить?` } });
+            return res.status(400).json({ errors: { message: `Продукт з такою назвою і особистим номером вже існує!` } });
         }
 
         const newProduct = new Product({
@@ -442,7 +475,7 @@ app.get('/get-products', async (req, res) => {
         const products = await Product.find();
         return res.status(201).json({ products: products });
     } catch (e) {
-        return res.status(500).json({ errors: [{ message: `Ошибка сервера, статус 500!` }] });
+        return res.status(500).json({ errors: [{ message: `Помилка сервера, статус севрера 500!` }] });
     }
 });
 
@@ -454,7 +487,7 @@ app.put('/create-user-feedback', async (req, res) => {
         const user = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
 
         if (!user) {
-            return res.status(400).json({ error: { message: 'Такого пользователя не существует!' } });
+            return res.status(400).json({ error: { message: 'Такого користувача не існує!' } });
         }
 
         await User.updateOne({ _id: Userdata._id }, {
@@ -470,7 +503,7 @@ app.put('/create-user-feedback', async (req, res) => {
             }
         });
 
-        return res.status(201).json({ message: 'Отзыв был создан!' });
+        return res.status(201).json({ message: 'Відгук був успішно створенний!' });
 
     } catch (error) {
         console.error(error);
@@ -496,7 +529,7 @@ app.get('/get-all-feedbacks', async (req, res) => {
 // Functiion for starting server
 const start = async () => {
     try {
-        await mongoose.connect('mongodb+srv://shopopalo:Var54321@cluster0.qvze0.mongodb.net/awesome?retryWrites=true&w=majority');
+        await mongoose.connect('mongodb+srv://shopopalo:Var54321@cluster0.qvze0.mongodb.net/?retryWrites=true&w=majority');
         app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
     } catch (e) {
         console.error(e);

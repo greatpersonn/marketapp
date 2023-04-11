@@ -39,16 +39,16 @@ const Shopcart = () => {
             {
                 statusLogin ?
                     <div className="container-shopcart">
-                        <p>Корзина <span>{JSON.parse(localStorage.getItem('user')).username}</span></p>
+                        <p>Кошик <span>{JSON.parse(localStorage.getItem('user')).username}</span></p>
                         {
                             products.map((prod, id) => (
                                 <Shopcard prod={prod} key={id} />
                             ))
                         }
                         {
-                            products.length <= 0 ? <p>Возомжно пришло время добавить сюда что-то?</p> : <Button name='Оформить заказ' func={() => { setOrderModal(prev => !prev); }} />
+                            products.length <= 0 ? <p>Можливо настав час заповнити кошик свіжою рибкою?</p> : <Button name='Оформлення замовлення' func={() => { setOrderModal(prev => !prev); }} />
                         }
-                        <NavLink to='/'>Главная</NavLink>
+                        <NavLink to='/'>Головна</NavLink>
                     </div>
                     :
                     <SignIn />

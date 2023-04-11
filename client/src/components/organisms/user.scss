@@ -1,17 +1,19 @@
 .container-user {
     width: 250px;
-    padding: 30px 10px;
+    padding: 40px 15px;
     
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 15px;
 
-    background-color: rgb(235, 235, 235);
+    background-color: rgb(255, 255, 255);
+    border-radius: 18px;
     transition: .4s all;
 
     p {
-        margin: 10px 0px;
+        margin: 0;
     }
 
     img {
@@ -35,25 +37,27 @@
 
         .edit {
             color: white;
-            background-color: #000;
+            background-color: #159895;
             border-radius: 25px 0px 0px 25px;
             transition: .3s all;
 
             &:hover {
                 transition: .2s all;
-                background-color: #d90429;
+                color: #427a73;
+                background-color: #57C5B6;
             }
         }
 
         .delete {
             color: white;
-            background-color: #000;
+            background-color: #159895;
             border-radius: 0px 25px 25px 0px;
             transition: .3s all;
 
             &:hover {
                 transition: .2s all;
-                background-color: #d90429;
+                color: #427a73;
+                background-color: #57C5B6;
             }
         }
     }
@@ -62,6 +66,6 @@
         transition: .5s all;
         transform: scale(1.03);
         cursor: pointer;
-        box-shadow: 0px 0px 10px 1px rgba(161, 161, 161, 0.6);
+        box-shadow: 0px 0px 10px 1px rgba(76, 152, 172, 0.6);
     }
 }

@@ -38,11 +38,11 @@ const Edit = () => {
         <form onSubmit={editUser} className='form-modal'>
             <div className="main__modal-container">
                 <div className="container-info edit" >
-                    <Input type='text' nameInput='Новый логин' inputId='productName' holderTitle="Введите новый логин..." inputObject={_editname} />
-                    <Input type='text' nameInput='Новая почта' inputId='productKey' holderTitle="Введите новую почту..." inputObject={_editemail} />
-                    <Input type='text' nameInput='Изменить роль' inputId='productPrice' holderTitle="Введите новую роль..." inputObject={_editrole} />
+                    <Input type='text' nameInput='Новий логін' inputId='productName' holderTitle="Введіть новий логін..." inputObject={_editname} />
+                    <Input type='text' nameInput='Нова електронна пошта' inputId='productKey' holderTitle="Введіть нову пошту..." inputObject={_editemail} />
+                    <Input type='text' nameInput='Змінити роль' inputId='productPrice' holderTitle="Введіть нову роль..." inputObject={_editrole} />
                     <div className="container-buttons">
-                        <Button name="Редактировать" func={() => { console.log('Edit user'); }} />
+                        <Button name="Редагування" func={() => { console.log('Edit user'); }} />
                         <FontAwesomeIcon icon={faXmark} className="closemodal-icon" onClick={() => { setEditModal(prev => !prev) }} />
                     </div>
                 </div>

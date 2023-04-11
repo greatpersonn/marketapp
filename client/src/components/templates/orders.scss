@@ -21,7 +21,8 @@
         align-items: flex-start;
 
         box-sizing: border-box;
-        border: 3px solid rgb(245, 245, 245);
+        background-color: white;
+        border-radius: 25px;
 
         .order-info {
             padding: 15px 10px;
@@ -61,13 +62,8 @@
                 text-decoration: none;
 
                 &:hover {
-                    color: #d90429;
+                    color: #159895;
                 }
-            }
-
-            &:hover {
-                cursor: pointer;
-                background-color: rgb(245, 245, 245);
             }
         }
 
@@ -80,13 +76,17 @@
             align-items: center;
             gap: 25px;
 
-            background-color: rgb(245, 245, 245);
+            background-color: rgb(255, 255, 255);
+            border-radius: 25px;
 
             ul {
                 font-size: 1.2rem;
 
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+
                 li {
-                    padding: 5px 0px;
                     margin: 0px 30px;
 
                     font-size: 0.9rem;
@@ -100,10 +100,15 @@
                 justify-content: center;
                 align-items: flex-start;
 
+                select {
+                    width: 200px;
+                    margin: 5px 0px;
+                    padding: 10px 10px;
+                }
+
                 label {
                     font-size: 1.2rem;
                 }
-
             }
 
             button {

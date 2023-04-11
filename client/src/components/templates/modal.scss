@@ -15,15 +15,14 @@
 
         .container-news {
             width: 500px;
-            height: 700px;
+            height: 770px;
             margin: 72px 0px;
-            padding: 21px 0px;
+            padding: 30px 0px;
 
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-
 
             background-color: rgb(243, 243, 243);
             border-radius: 25px;
@@ -32,6 +31,28 @@
                 font-size: 1.6rem;
                 text-transform: uppercase;
                 font-weight: 600;
+            }
+
+            .closemodal-icon {
+                padding: 15px 35px;
+                margin: 15px 0px 5px;
+                height: 20px;
+
+                color: white;
+                font-size: 1rem;
+                font-weight: 500;
+                font-style: normal;
+
+                background-color: #159895;
+                box-shadow: 0px 0px 8px 1px #159895;
+                border-radius: 20px;
+
+                &:hover {
+                    cursor: pointer;
+                    background-color: #000;
+                    border-radius: 20px;
+                    box-shadow: 0px 0px 8px 1px #000;
+                }
             }
 
             .container-textarea {
@@ -72,7 +93,7 @@
                     }
 
                     &:focus {
-                        outline: 2px solid #d90429;
+                        outline: 2px solid #57C5B6;
 
                         &::placeholder {
                             transition: .5s all;
@@ -122,10 +143,11 @@
             }
         }
 
+
         .container-info {
             width: 600px;
-            margin: 100px 0px;
-            padding: 21px 0px;
+            margin: 140px 0px;
+            padding: 30px 0px;
 
             background-color: rgb(243, 243, 243);
             border-radius: 25px;
@@ -153,8 +175,8 @@
                     font-weight: 500;
                     font-style: normal;
 
-                    background-color: #d90429;
-                    box-shadow: 0px 0px 8px 1px #d90429;
+                    background-color: #159895;
+                    box-shadow: 0px 0px 8px 1px #159895;
                     border-radius: 20px;
 
                     &:hover {
@@ -207,7 +229,7 @@
                     }
 
                     &:focus {
-                        outline: 2px solid #d90429;
+                        outline: 2px solid #427a73;
 
                         &::placeholder {
                             transition: .5s all;
@@ -290,13 +312,76 @@
                     color: rgba(26, 26, 26, 0.8);
                 }
 
+                .dropdown-list {
+                    width: 300px;
+                    position: relative;
+
+                    .list-header {
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: space-between;
+
+                        padding: 15px 15px;
+
+                        border: none;
+                        outline: none;
+                        background: #ffffff;
+                        border-radius: 15px;
+
+                        color: rgba(26, 26, 26, 0.7);
+                        font-size: 0.9rem;
+                        font-weight: 600;
+                        font-family: 'Commissioner', sans-serif;
+
+                        svg.open-list {
+                            transform: rotate(180deg);
+                        }
+
+                        &:hover {
+                            cursor: pointer;
+                        }
+                    }
+
+                    .list {
+                        position: absolute;
+                        width: 100%;
+
+                        li {
+                            margin: 5px 0px;
+                            list-style: none;
+                            padding: 15px 15px;
+
+                            border: none;
+                            outline: none;
+                            background: #159896;
+                            border-radius: 15px;
+
+                            color: rgb(255, 255, 255);
+                            font-size: 0.9rem;
+                            font-weight: 600;
+                            font-family: 'Commissioner', sans-serif;
+                            transition: all 0.5s ease;
+
+                            &:hover {
+                                cursor: pointer;
+                                transform: scale(1.1);
+
+                                color: #427a73;
+                                background-color: #57C5B6;
+                                box-shadow: 0px 0px 5px 0px #57C5B6;
+                                transition: all 0.5s ease;
+                            }
+                        }
+                    }
+                }
+
                 select {
                     width: 300px;
                     padding: 15px 10px;
 
                     border: none;
                     outline: none;
-                    background: #e2e2dd;
+                    background: #ffffff;
                     border-radius: 15px;
 
                     color: rgba(26, 26, 26, 0.7);
@@ -305,10 +390,13 @@
                     font-family: 'Commissioner', sans-serif;
 
                     option {
+                        border: none;
                         font-size: 1rem;
                         font-weight: 600;
                         text-transform: uppercase;
                         color: rgba(26, 26, 26, 0.8);
+                        border-radius: 18px;
+                        margin: 5px 0px;
                     }
                 }
             }

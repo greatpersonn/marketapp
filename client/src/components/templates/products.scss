@@ -1,7 +1,7 @@
 .container-products {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 80px;
+    gap: 40px;
 }
 
 .container-pagination {
@@ -9,26 +9,27 @@
     display: flex;
     
     width: 80%;
-    background-color: rgb(235, 235, 235);
+    background-color: rgba(255, 255, 255, 0);
 
 
     li {
         margin: 5px 5px;
-        padding: 5px 15px;
+        padding: 9px 19px;
 
         text-decoration: none;
-        color: #d90429;
-        font-size: 1.4rem;
+        color: #159895;
+        font-size: 1.5rem;
         list-style: none;
+        border-radius: 17px;
 
         transition: all 0.4s;
 
         &:hover {
-            transition: all 0.6s;
+            transition: all 0.2s;
             cursor: pointer; 
             
             color: #fff;
-            background-color: #c00524;
+            background-color: #159896a2;
         }
     }
 }

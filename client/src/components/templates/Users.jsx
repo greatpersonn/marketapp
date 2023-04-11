@@ -57,7 +57,7 @@ const Users = () => {
                         }
                     </>
                     :
-                    <NavLink to='/sign-in'>Авторизоваться</NavLink>
+                    <NavLink to='/sign-in'>Авторизуватись</NavLink>
             }
             {
                 isEditModal && <Edit />

@@ -11,7 +11,7 @@ const Header = () => {
         <header>
             <div className="header__container">
                 <div className="container-headweb">
-                    <NavLink to='/'>MIRTA</NavLink>
+                    <NavLink to='/'>aquapeak</NavLink>
                 </div>
             </div>
         </header>

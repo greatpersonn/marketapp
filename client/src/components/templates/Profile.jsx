@@ -2,18 +2,23 @@ import { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import Loader from '../atoms/Loader';
+import Button from '../atoms/Button';
 import Ordercard from '../organisms/Ordercard';
+import ProfileModal from './ProfileModal';
 
 import { AuthContext } from "../../context/auth-context";
+import { ModalContext } from '../../context/modal-context';
 
 import './profile.scss';
 
 const Profile = () => {
     const [isLoading, setLoading] = useState(false);
+
     const [user, setUser] = useState({ userimage: 'defaultUser.png', username: '', useremail: '', userrole: 'User' });
     const [orders, setOrders] = useState([]);
 
     const { statusLogin, setStatus } = useContext(AuthContext);
+    const { isProfile, setProfileModal } = useContext(ModalContext);
 
     const handleLoadData = async () => {
         setLoading(true);
@@ -57,16 +62,31 @@ const Profile = () => {
                                 :
                                 <>
                                     <div className='profile-info'>
-                                        <img src={require(`../../../public/users/${user.userimage}`)} alt="userImage" />
-                                        <p>Логин: <span>{user.username}</span></p>
-                                        <p>Почта: <span>{user.useremail}</span></p>
-                                        <p>Роль: <span>{user.userrole}</span></p>
-                                        <NavLink to="/">Главная</NavLink>
-                                        <NavLink to="/shop-cart">Корзина</NavLink>
-                                        <NavLink to="/" onClick={handleLogout}>Выход</NavLink>
+                                        <div className="info-container">
+                                            <div className="container-title">
+                                                <img src={require(`../../../public/users/${user.userimage}`)} alt="userImage" />
+                                                <div className="title-info">
+                                                    { user.name != undefined ? <span>{user.name} {user.surname}</span> : <span>{user.username}</span> }
+                                                    <span>{user.useremail}</span>
+                                                </div>
+                                            </div>
+                                            {
+                                                user.name != undefined ? 
+                                                <div className="container-subtitle">
+                                                    <div className="subtitle-info">Номер телефону <span>{ user.phone }</span></div>
+                                                    <div className="subtitle-info">Місто <span>{ user.city }</span></div>
+                                                    <div className="subtitle-info">Поштовий індекс <span>{ user.postalcode }</span></div>
+                                                </div> : null
+                                            }
+                                        </div>
+
+                                        <NavLink to="/">Головна</NavLink>
+                                        <NavLink to="/shop-cart">Кошик</NavLink>
+                                        <Button name='Особиста інформація' func={() => { setProfileModal(prev => !prev); }} />
                                         {
-                                            user.userrole === 'Admin' || user.userrole === 'Moderator' || user.userrole === 'Operator' ? <NavLink to='/adminpanel'>Панель сотрудника</NavLink> : null
+                                            user.userrole === 'Admin' || user.userrole === 'Moderator' || user.userrole === 'Operator' ? <NavLink to='/adminpanel'>Панель робітника</NavLink> : null
                                         }
+                                        <NavLink to="/" onClick={handleLogout}>Вийти з кабінету</NavLink>
                                     </div>
                                     <div className="profile-order">
                                         {
@@ -75,6 +95,9 @@ const Profile = () => {
                                             ))
                                         }
                                     </div>
+                                    {
+                                        isProfile && <ProfileModal />
+                                    }
                                 </>
                         }
                     </>

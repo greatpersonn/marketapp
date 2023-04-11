@@ -64,15 +64,15 @@ const FeedbackModal = ({ order }) => {
         <form onSubmit={createFeedback} className='form-modal'>
             <div className="main__modal-container">
                 <div className="container-info">
-                    <Input type='text' nameInput='Имя' inputId='productName' holderTitle="Введите ваше имя" inputObject={_username} />
-                    <Input type='text' nameInput='Фамилия' inputId='productKey' holderTitle="Введите вашу фамилию" inputObject={_usersurname} />
-                    <Input type='text' nameInput='Номер телефона' inputId='productKey' holderTitle="Введите ваш нормер телефона" inputObject={_usernumber} />
+                    <Input type='text' nameInput='Ім`я' inputId='productName' holderTitle="Введіть своє ім`я..." inputObject={_username} />
+                    <Input type='text' nameInput='Прізвище' inputId='productKey' holderTitle="Введіть своє прізвище..." inputObject={_usersurname} />
+                    <Input type='text' nameInput='Номер телефону' inputId='productKey' holderTitle="Введіть свій номер телефону..." inputObject={_usernumber} />
                     <div className="container-textarea">
-                        <label htmlFor="feedback">Отзыв</label>
+                        <label htmlFor="feedback">Відгук</label>
                         <textarea name="feedback" id="feedback" cols="30" rows="10" onChange={e => setFeedback(e.target.value)}></textarea>
                     </div>
                     <div className="container-buttons">
-                        <Button name="Отправить отзыв" func={() => { console.log('Create product'); }} />
+                        <Button name="Створити відгук" func={() => { console.log('Create product'); }} />
                         <FontAwesomeIcon icon={faXmark} className="closemodal-icon" onClick={() => { setFeedbackModal(prev => !prev) }} />
                     </div>
                 </div>

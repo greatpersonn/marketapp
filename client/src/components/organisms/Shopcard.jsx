@@ -32,7 +32,7 @@ const Shopcard = ({ prod }) => {
                 <p>{prod.productdesc}</p>
             </div>
             <div className="card-price">
-                <p>{prod.productprice} руб</p>
+                <p>{prod.productprice} грн</p>
             </div>
             <div className="card-tools">
                 <FontAwesomeIcon icon={faTrashCan} className='tool-delete' onClick={() => { handleDelte(); }} />
