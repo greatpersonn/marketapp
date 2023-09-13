@@ -10,9 +10,9 @@ import { ModalContext } from '../../context/modal-context';
 import './ordercard.scss';
 
 const Ordercard = ({ order }) => {
-    const { isFeedback, setFeedbackModal, isPayment, setPaymentModal } = useContext(ModalContext);
     const [orderDate, setOrderDate] = useState(order.orderdate);
-    const [modalActive, setModalActive] = useState(false);
+    const [modalPayment, setPaymentModal] = useState(false);
+    const [modalFeeedback, setFeedbackModal] = useState(false);
 
     const handlerDate = (order) => {
         let dateParts = order.orderdate.split('.');
@@ -68,7 +68,7 @@ const Ordercard = ({ order }) => {
                     <p>{orderDate}</p>
                 </div>
                 <div className="ordercard-payment">
-                    {order.payment ? null : <Button name='Сплатити' func={() => setModalActive(prev => !prev)} />}
+                    {order.payment ? null : <Button name='Сплатити' func={() => setPaymentModal(prev => !prev)} />}
                 </div>
                 {
                     (order.orderstatus === 'Виконано' || order.orderstatus === 'Доставлено') &&
@@ -77,9 +77,13 @@ const Ordercard = ({ order }) => {
                     </div>
                 }
             </div>
-            {isFeedback && <FeedbackModal order={order} />}
-            {modalActive && 
-                <Modal active={modalActive} setActive={setModalActive} header={"Aquapeak.pay"}>
+            {modalFeeedback && 
+                <Modal active={modalFeeedback} setActive={setFeedbackModal} header={"Залишити відгук"}>
+                    <FeedbackModal order={order} />
+                </Modal>
+            }
+            {modalPayment && 
+                <Modal active={modalPayment} setActive={setPaymentModal} header={"Aquapeak.pay"}>
                     <PaymentModal order={order} />
                 </Modal>
             }
