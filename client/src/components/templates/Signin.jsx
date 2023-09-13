@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faKey } from '@fortawesome/free-solid-svg-icons';
-
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import KeyIcon from '@mui/icons-material/Key';
 
 import Input from "../atoms/Input";
 import Button from "../atoms/Button";
@@ -56,12 +55,12 @@ const SingIn = () => {
             <form onSubmit={(e) => handleSubmit(e)}>
                 <div className="signin-headtext">Авторизація</div>
                 <div className="wrap_input">
-                    <Input type='email' nameInput='Електронна пошта' holderTitle='Введіть вашу пошту...' inputObject={_useremail} inputId='useremail' />
-                    <FontAwesomeIcon icon={faUser} />
+                    <Input type='email' holderTitle='Введіть вашу пошту...' inputObject={_useremail} inputId='useremail' />
+                    <AlternateEmailIcon />
                 </div>
                 <div className="wrap_input">
-                    <Input type='password' nameInput='Пароль' holderTitle='Введіть ваш пароль...' inputObject={_userpass} inputId='userpass' />
-                    <FontAwesomeIcon icon={faKey} />
+                    <Input type='password' holderTitle='Введіть ваш пароль...' inputObject={_userpass} inputId='userpass' />
+                    <KeyIcon />
                 </div>
                 <Button name='Поринути в море' func={() => { console.log('Авторизация пользователя'); }} />
                 <NavLink to='/sign-up'>Стати рибкою?</NavLink>

@@ -63,7 +63,7 @@ const Orders = () => {
                             {order.orderstatus === 'В обробці' && <img src={require('../../assets/images/orderstatus/system.png')} alt="statusImage" />}
                             {order.orderstatus === 'Підтверджений' && <img src={require('../../assets/images/orderstatus/confirmation.png')} alt="statusImage" />}
                             {order.orderstatus === 'Комплектується' && <img src={require('../../assets/images/orderstatus/teamwork.png')} alt="statusImage" />}
-                            {order.orderstatus === 'В очікуванні клієнта' && <img src={require('../../assets/images/orderstatus/wait.png')} alt="statusImage" />}
+                            {order.orderstatus === 'Очікує клієнта' && <img src={require('../../assets/images/orderstatus/wait.png')} alt="statusImage" />}
                             {order.orderstatus === 'Виконано' && <img src={require('../../assets/images/orderstatus/success.png')} alt="statusImage" />}
                             {order.orderstatus === 'Доставлено' && <img src={require('../../assets/images/orderstatus/shipped.png')} alt="statusImage" />}
                             <p>{order.ordernum}</p>
@@ -78,13 +78,14 @@ const Orders = () => {
                                     ))
                                 }
                             </ul>
+                            <div className="order-payment">Сплачено: { order.payment ? <span>Так</span> : <span>Ні</span> }</div>
                             <div className="order-option">
                                 <label htmlFor="get-order">Зміна статусу</label>
                                 <select name="get-order" id="get-order" onChange={(e) => { setStatus(e.target.value) }}>
                                     <option value="В обробці">В обробці</option>
                                     <option value="Підтверджений">Підтверджений</option>
                                     <option value="Комплектується">Комплектується</option>
-                                    <option value="В очікуванні клієнта">В очікуванні клієнта</option>
+                                    <option value="Очікує клієнта">В очікуванні клієнта</option>
                                     <option value="Виконано">Виконан</option>
                                     <option value="Доставлено">Доставлен</option>
                                 </select>

@@ -1,6 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 import Button from '../atoms/Button';
 
@@ -57,7 +56,7 @@ const Card = (props) => {
                 JSON.parse(localStorage.getItem('status_login')) &&
                 JSON.parse(localStorage.getItem('user')).userrole == 'Admin' &&
                 <div className='card-control'>
-                    <FontAwesomeIcon icon={faTrashCan} className='tool delete' onClick={() => { handleDelete(); }} />
+                    <DeleteIcon className='tool delete' onClick={() => { handleDelete(); }} />
                 </div>
             }
         </div>

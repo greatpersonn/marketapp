@@ -11,8 +11,9 @@
     align-items: center;
     gap: 55px;
 
-    background-color: #fff;
-    border-radius: 25px;
+    background-color: rgba(235, 235, 235, 0.5);
+    box-shadow: 0px 3px 19px -3px rgba(0, 0, 0, 0.3);
+    border-radius: 7px;
 
     img {
         width: 15%;
@@ -48,17 +49,28 @@
 
     .card-tools {
         .tool-delete {
-            font-size: 1.5rem;
-            
+            padding: 10px;
+
+            outline: none;
+            color: #0e0e0e;
+            border: none;
+            background-color: #eeeeee49;
+            box-shadow: 0px 2px 12px 2px #0e0e0e52;
+            border-radius: 10px;
+            transition: all 0.1s ease;
+
             &:hover {
+                transition: all 0.2s ease-in-out;
+
                 cursor: pointer;
-                color: #159895;    
+                color: white;
+                background-color: #0e0e0e;
+                box-shadow: none;
             }
         }
     }
 
     &:hover {
         cursor: pointer;
-        box-shadow: 0px 0px 8px 1px rgba(47, 136, 151, 0.397);
     }
 }

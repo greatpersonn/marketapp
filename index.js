@@ -135,7 +135,6 @@ app.put('/edit-user', async (req, res) => {
 
 app.put('/update-user-info', async (req, res) => {
     try {
-        console.log(req.body);
         const { UserId, Username, Usersurname, Usercity, Userpostalcode, Userphonenumber } = req.body;
 
         const user = await User.find({ _id: UserId });
@@ -185,13 +184,13 @@ app.delete('/delete-user', async (req, res) => {
 app.put('/add-user-product', async (req, res) => {
     try {
         const { Userdata, Productdata } = req.body;
-        
+
         const candidate = await User.find({ _id: Userdata._id, username: Userdata.username, useremail: Userdata.useremail });
-        
+
         if (!candidate) {
             return res.status(400).json({ error: { message: 'Такого користувача не існує!' } });
         }
-        
+
         await User.updateOne({ _id: Userdata._id }, {
             $push: {
                 userproducts: {
@@ -203,9 +202,9 @@ app.put('/add-user-product', async (req, res) => {
                 }
             }
         });
-        
+
         return res.status(201).json({ message: 'Продукт був доданий до кошика користувача!' });
-        
+
     } catch (error) {
         console.error(error);
     }
@@ -260,7 +259,7 @@ app.delete('/delete-user-product', async (req, res) => {
 /* USER ORDERS */
 app.post('/create-user-orders', async (req, res) => {
     try {
-        const { UserId, Products, PhoneNumber, OrderNum, OrderDate } = req.body;
+        const { UserId, Products, Payment, PhoneNumber, OrderNum, OrderDate } = req.body;
 
         const candidate = await User.find({ _id: UserId });
 
@@ -275,6 +274,7 @@ app.post('/create-user-orders', async (req, res) => {
                     orderproducts: Products,
                     phonenumber: PhoneNumber,
                     orderstatus: 'В обробці',
+                    payment: Payment,
                     orderdate: OrderDate
                 }
             },
@@ -332,6 +332,51 @@ app.get('/get-all-orders', async (req, res) => {
     }
 });
 
+app.put('/pay-for-order', async (req, res) => {
+    try {
+        let userData, userOrderNum, userOrder;
+        const { UserId, Order } = req.body;
+        const allUsers = await User.find();
+
+        for (let user in allUsers) {
+            for (let order in allUsers[user].userorders) {
+                if (Order.ordernum === allUsers[user].userorders[order].ordernum) {
+                    userData = allUsers[user];
+                    userOrder = allUsers[user].userorders[order];
+                    userOrderNum = allUsers[user].userorders[order].ordernum;
+                }
+            }
+        }
+
+        userOrder.payment = true;
+
+        await User.updateOne({ _id: userData._id }, {
+            $pull: {
+                userorders: {
+                    ordernum: userOrderNum
+                }
+            }
+        });
+
+        await User.updateOne({ _id: userData._id }, {
+            $push: {
+                userorders: {
+                    ordernum: userOrder.ordernum,
+                    orderproducts: userOrder.orderproducts,
+                    phonenumber: userOrder.phonenumber,
+                    orderstatus: userOrder.orderstatus,
+                    orderdate: userOrder.orderdate,
+                    payment: true
+                }
+            }
+        });
+
+        res.status(200).json({ message: 'Замовлення сплачено!' });
+    } catch (error) {
+        console.error(error)
+    }
+});
+
 app.post('/update-order', async (req, res) => {
     try {
         let userData, userOrderNum, userOrder;
@@ -365,7 +410,8 @@ app.post('/update-order', async (req, res) => {
                     orderproducts: userOrder.orderproducts,
                     phonenumber: userOrder.phonenumber,
                     orderstatus: userOrder.orderstatus,
-                    orderdate: userOrder.orderdate
+                    orderdate: userOrder.orderdate,
+                    payment: userOrder.payment
                 }
             }
         });
@@ -497,6 +543,7 @@ app.put('/create-user-feedback', async (req, res) => {
                     surname: Feedback.Usersurname,
                     phonenumber: Feedback.Usernumber,
                     feedback: Feedback.Feedback,
+                    rating: Feedback.Rating,
                     date: Feedback.Date,
                     ordernum: OrderNum,
                 }

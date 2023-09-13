@@ -1,8 +1,6 @@
 import React from "react";
 import { NavLink } from 'react-router-dom';
 
-import Switch from "../atoms/Switch";
-
 // Styles
 import './header.scss';
 

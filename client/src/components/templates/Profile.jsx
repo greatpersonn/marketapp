@@ -1,6 +1,8 @@
 import { useContext, useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
+import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
+
 import Loader from '../atoms/Loader';
 import Button from '../atoms/Button';
 import Ordercard from '../organisms/Ordercard';
@@ -35,9 +37,7 @@ const Profile = () => {
         })
 
         const jsonData = await response.json();
-
         setOrders(jsonData.orders.userorders);
-
         setLoading(false);
     }
 
@@ -64,7 +64,7 @@ const Profile = () => {
                                     <div className='profile-info'>
                                         <div className="info-container">
                                             <div className="container-title">
-                                                <img src={require(`../../../public/users/${user.userimage}`)} alt="userImage" />
+                                                <AccountCircleOutlinedIcon />
                                                 <div className="title-info">
                                                     { user.name != undefined ? <span>{user.name} {user.surname}</span> : <span>{user.username}</span> }
                                                     <span>{user.useremail}</span>

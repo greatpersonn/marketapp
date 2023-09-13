@@ -1,20 +1,21 @@
-import { useState, useContext, useEffect  } from "react";
+import { useState, useContext, useEffect } from "react";
 import { NavLink } from "react-router-dom";
+import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 
 import SignIn from './Signin';
 import Button from "../atoms/Button";
 import Shopcard from "../organisms/Shopcard";
 import Order from "./Order";
+import Modal from '../molecules/Modal';
 
 import { AuthContext } from "../../context/auth-context";
-import { ModalContext } from "../../context/modal-context";
 
 import './shopcart.scss';
 
 const Shopcart = () => {
     const { statusLogin } = useContext(AuthContext);
-    const { isOrderModal, setOrderModal } = useContext(ModalContext);
-    const [products, setProducts] = useState([]); 
+    const [modalActive, setModalActive] = useState(false);
+    const [products, setProducts] = useState([]);
 
     const handleLoadProducts = async () => {
         const data = { 'Userdata': JSON.parse(localStorage.getItem('user')) };
@@ -39,22 +40,32 @@ const Shopcart = () => {
             {
                 statusLogin ?
                     <div className="container-shopcart">
-                        <p>Кошик <span>{JSON.parse(localStorage.getItem('user')).username}</span></p>
                         {
-                            products.map((prod, id) => (
-                                <Shopcard prod={prod} key={id} />
-                            ))
+                            products.length > 0 ?
+                                <>
+                                    <p>Кошик <span>{JSON.parse(localStorage.getItem('user')).username}</span></p>
+                                    {
+                                        products.map((prod, id) => (
+                                            <Shopcard prod={prod} key={id} />
+                                        ))
+                                    }
+                                    <Button name='Створити замовлення' func={() => { setModalActive(prev => !prev); }} />
+                                </> :
+                                <div className="wrapper-error">
+                                    <SentimentVeryDissatisfiedIcon />
+                                    <span>Щось мені сумно, що тут нічого немає...</span>
+                                    <NavLink to='/'>Головна</NavLink>
+                                </div>
                         }
-                        {
-                            products.length <= 0 ? <p>Можливо настав час заповнити кошик свіжою рибкою?</p> : <Button name='Оформлення замовлення' func={() => { setOrderModal(prev => !prev); }} />
-                        }
-                        <NavLink to='/'>Головна</NavLink>
-                    </div>
+                    </div >
                     :
                     <SignIn />
             }
             {
-                isOrderModal && <Order products={products} />
+                modalActive && 
+                <Modal active={modalActive} setActive={setModalActive} header={'Оформлення замовлення'}>
+                    <Order products={products} />
+                </Modal>
             }
         </>
     );

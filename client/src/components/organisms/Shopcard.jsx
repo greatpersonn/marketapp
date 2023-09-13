@@ -1,7 +1,4 @@
-import { useState, useContext, useEffect  } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-
+import DeleteIcon from '@mui/icons-material/Delete';
 import './shopcard.scss';
 
 const Shopcard = ({ prod }) => {
@@ -35,7 +32,7 @@ const Shopcard = ({ prod }) => {
                 <p>{prod.productprice} грн</p>
             </div>
             <div className="card-tools">
-                <FontAwesomeIcon icon={faTrashCan} className='tool-delete' onClick={() => { handleDelte(); }} />
+                <DeleteIcon className='tool-delete' onClick={() => { handleDelte(); }} />
             </div>
         </div>
     )

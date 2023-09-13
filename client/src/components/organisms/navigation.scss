@@ -4,38 +4,28 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    gap: 25px;
 
     a {
-        margin: 5px 0px;
-        padding: 13px 18px;
-        letter-spacing: 0.09rem;
-        font-family: 'Commissioner', sans-serif;
-        font-size: 0.95rem;
+        padding: 10px 15px;
+        font-size: 1.2rem;
         font-weight: 500;
-        color: #fff;
-        text-decoration: none; 
-
+        color: #0e0e0e;
+        text-decoration: none;
         outline: none;
         border: none;
-        background-color: #159895;
-        box-shadow: 0px 0px 5px 0px #159895;
+        background-color: #eeeeee49;
+        box-shadow: 0px 2px 12px 2px #0e0e0e52;
         transition: all 0.5s;
-
-        &:nth-child(1) {
-            border-radius: 17px 0px 0px 17px;
-        }
-
-        &:nth-child(6) {
-            border-radius: 0px 17px 17px 0px;
-        }
+        border-radius: 5px;
 
         &:hover {
-            transition: all 0.2s;
+            transition: all 0.1s ease-in-out;
 
             cursor: pointer;
-            color: #427a73;
-            background-color: #57C5B6;
-            box-shadow: 0px 0px 5px 0px #57C5B6;
+            color: white;
+            background-color: #0e0e0e;
+            box-shadow: none;
         }
     }
 }

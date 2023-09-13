@@ -1,6 +1,9 @@
 import React, { useContext, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import QrCodeIcon from '@mui/icons-material/QrCode';
+import TitleIcon from '@mui/icons-material/Title';
+import AttachMoneyIcon from '@mui/icons-material/AttachMoney';
+import CalendarMonthIcon from '@mui/icons-material/CalendarMonth';
+import FontDownloadIcon from '@mui/icons-material/FontDownload';
 
 import Button from "../atoms/Button";
 import Input from "../atoms/Input";
@@ -24,7 +27,7 @@ const Create = () => {
     const createProduct = async (e) => {
         try {
             const formData = new FormData();
-            if(!_productname.value || !_productkey.value || !_productprice.value || !_productdesc.value || !_dateadded.value) {
+            if (!_productname.value || !_productkey.value || !_productprice.value || !_productdesc.value || !_dateadded.value) {
                 return alert('Поля не могут быть пустыми!');
             }
 
@@ -56,18 +59,32 @@ const Create = () => {
         <form onSubmit={createProduct} className='form-modal'>
             <div className="main__modal-container">
                 <div className="container-info">
-                    <Input type='text' nameInput='Найменування товару' inputId='productName' holderTitle="Введіть назву товару..." inputObject={_productname} />
-                    <Input type='text' nameInput='Код товару' inputId='productKey' holderTitle="Введіть код товару..." inputObject={_productkey} />
-                    <Input type='text' nameInput='Ціна на товар' inputId='productPrice' holderTitle="Введіть ціну товару..." inputObject={_productprice} />
-                    <Input type='text' nameInput='Додайте опис товару' inputId='productDesc' holderTitle="Введіть опис товару..." inputObject={_productdesc} />
-                    <Input type='text' nameInput='Дата створення товару' inputId='dateAdded' holderTitle="Введіть дату (дд/мм/рррр)..." inputObject={_dateadded} />
+                    <div className="info-input">
+                        <Input type='text' nameInput='Найменування товару' inputId='productName' holderTitle="Введіть назву товару..." inputObject={_productname} />
+                        <FontDownloadIcon />
+                    </div>
+                    <div className="info-input">
+                        <Input type='text' nameInput='Код товару' inputId='productKey' holderTitle="Введіть код товару..." inputObject={_productkey} />
+                        <QrCodeIcon />
+                    </div>
+                    <div className="info-input">
+                        <Input type='text' nameInput='Ціна на товар' inputId='productPrice' holderTitle="Введіть ціну товару..." inputObject={_productprice} />
+                        <AttachMoneyIcon />
+                    </div>
+                    <div className="info-input">
+                        <Input type='text' nameInput='Додайте опис товару' inputId='productDesc' holderTitle="Введіть опис товару..." inputObject={_productdesc} />
+                        <TitleIcon />
+                    </div>
+                    <div className="info-input">
+                        <Input type='text' nameInput='Дата створення товару' inputId='dateAdded' holderTitle="Введіть дату (дд/мм/рррр)..." inputObject={_dateadded} />
+                        <CalendarMonthIcon />
+                    </div>
                     <div className="uploader__container">
-                        <input type="file" name="uploader" id="fileuploader" onChange={(e) => { changeHandler(e); }}/>
-                        <button>Додати картинку</button>
+                        <input type="file" name="uploader" id="fileuploader" onChange={(e) => { changeHandler(e); }} />
+                        <button>Додати зображення</button>
                     </div>
                     <div className="container-buttons">
                         <Button name="Створити" func={() => { console.log('Create product'); }} />
-                        <FontAwesomeIcon icon={faXmark} className="closemodal-icon" onClick={() => { setAddModal(prev => !prev) }} />
                     </div>
                 </div>
             </div>

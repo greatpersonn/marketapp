@@ -1,6 +1,6 @@
 import { useContext, useState } from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
+import FeedIcon from '@mui/icons-material/Feed';
+import TitleIcon from '@mui/icons-material/Title';
 
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
@@ -61,21 +61,22 @@ const NewsModal = () => {
         <form onSubmit={handleAddNews} className='form-modal'>
             <div className="main__modal-container">
                 <div className="container-news">
-                    <p>Создать новость</p>
-                    <Input type='text' nameInput='Заголовок' inputId='newsHeader' holderTitle="Введите заголовок" inputObject={_newsheader} />
-                    <Input type='text' nameInput='Краткое описание' inputId='newsTitle' holderTitle="Введите краткое описание" inputObject={_newstitle} />
+                    <div className="news-input">
+                        <Input type='text' nameInput='Краткое описание' inputId='newsTitle' holderTitle="Введите краткое описание" inputObject={_newstitle} />
+                        <FeedIcon />
+                    </div>
+                    <div className="news-input">
+                        <Input type='text' nameInput='Заголовок' inputId='newsHeader' holderTitle="Введите заголовок" inputObject={_newsheader} />
+                        <TitleIcon />
+                    </div>
                     <div className="container-textarea">
-                        <label htmlFor="newsContent">
-                            Текст новости
-                        </label>
                         <textarea name="news-content" id="newsContent" placeholder="Введите текст новости" onChange={(e) => setContent(e.target.value)}></textarea>
                     </div>
                     <div className="uploader__container">
                         <input type="file" name="uploader" id="fileuploader" onChange={(e) => { changeHandler(e); }} />
-                        <button>Добавить изображение</button>
+                        <button>Додати зображення</button>
                     </div>
                     <Button name="Создать новость" func={() => { console.log('Create news!'); }} />
-                    <FontAwesomeIcon icon={faXmark} className="closemodal-icon" onClick={() => { setNewsModal(prev => !prev) }} />
                 </div>
             </div>
         </form>

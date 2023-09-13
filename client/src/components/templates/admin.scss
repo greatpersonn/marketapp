@@ -1,64 +1,84 @@
 .container-adminpanel {
-    width: 1200px;
+    max-width: 100%;
 
     display: flex;
     flex-direction: column;
 
-    p {
-        margin: 0;
+    .adminpanel-header {
+        padding: 40px 0px 40px;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
 
-        &:nth-child(1) {
-            padding: 30px 0px 10px;
-            font-size: 1.4rem;
-            font-weight: 500;
-        }
+        span {
+            &:nth-child(1) {
+                font-size: 2rem;
+                font-weight: 600;
+                font-style: italic;
+            }
 
-        &:nth-child(2) {
-            font-size: 1rem;
-            font-weight: 400;
-            letter-spacing: 0.01rem;
-        }
-    }
-
-    button {
-        margin: 5px 0px 5px;
-    
-        &:nth-child(1) {
-            margin: 15px 0px 5px;
+            &:nth-child(2) {
+                padding: 5px 0px;
+                font-size: 1.1rem;
+                font-weight: 400;
+            }
         }
     }
 
     .title-moder {
+        width: 100%;
+
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 50px;
 
-        a {
-            width: 150px;
-            margin: 5px 0px;
-            padding: 12px 25px;
+        .moder-action-wrapper {
+            padding: 25px 15px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            background-color: #eeeeee49;
+                box-shadow: 0px 2px 12px 2px #0e0e0e52;
+                border-radius: 10px;
 
-            letter-spacing: 0.09rem;
-            font-family: 'Commissioner', sans-serif;
-            font-size: 0.95rem;
-            font-weight: 500;
-            color: #fff;
-            text-decoration: none;
+            svg {
+                padding: 25px 15px;
+                font-size: 5rem;
+            }
 
-            outline: none;
-            border: none;
-            background-color: #159895;
-            box-shadow: 0px 0px 5px 0px #159895;
-            border-radius: 17px;
-            transition: all 0.5s;
-
-            &:hover {
-                transition: all 0.5s;
-
-                cursor: pointer;
-                color: #427a73;
-                background-color: #57C5B6;
-                box-shadow: 0px 0px 5px 0px #57C5B6;
+            a {
+                width: 200px;
+                padding: 15px 20px;
+    
+                font-size: 1.2rem;
+                text-align: center;
+                font-weight: 500;
+                text-decoration: none;
+    
+                outline: none;
+                color: #0e0e0e;
+                border: none;
+                background-color: #eeeeee49;
+                box-shadow: 0px 2px 12px 2px #0e0e0e52;
+                border-radius: 10px;
+                transition: all 0.1s ease;
+    
+                &:hover {
+                    transition: all 0.2s ease-in-out;
+    
+                    cursor: pointer;
+                    color: white;
+                    background-color: #0e0e0e;
+                    box-shadow: none;
+                }
             }
         }
+
     }
 }

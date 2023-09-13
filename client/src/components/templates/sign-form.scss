@@ -4,20 +4,20 @@
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        gap: 15px;
 
         .signin-headtext {
-            margin: 30px 0 10px;
-
-            font-size: 30px;
+            padding: 30px 0px 10px;
+            font-size: 2.5rem;
             text-align: center;
             font-weight: 600;
-            color: rgba(26, 26, 26, 0.8);
-            text-transform: uppercase;
+            font-style: italic;
+            color: black;
         }
 
         a {
-            color: #000;
-            font-size: 0.85rem;
+            color: #3a68ff;
+            font-size: 0.9rem;
             font-weight: 600;
             text-decoration: none;
             text-transform: uppercase;
@@ -26,30 +26,32 @@
 
             &:hover {
                 transition: .3s all;
-                color: #337770;
+                color: black;
             }
         }
     }
 }
 .container-signin { 
-    padding: 160px 0px 381px;
+    padding: 160px 0px 380px;
 }
 
 .container-signup { 
-    padding: 160px 0px 181px;
+    padding: 160px 0px 180px;
 }
 
 .wrap_input {
+    position: relative;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
 
     svg {
+        position: absolute;
         cursor: pointer;
-        transform: translateY(21px) translateX(-35px);
-        color: #159895;
-        font-size: 1.1rem;
+        transform: translateY(0px) translateX(115px);
+        color: black;
+        font-size: 1.5rem;
     }
 }
 

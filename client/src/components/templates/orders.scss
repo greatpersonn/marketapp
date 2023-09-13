@@ -94,6 +94,20 @@
                 }
             }
 
+            .order-payment { 
+                font-size: 1.2rem;
+
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap: 5px;
+
+                span {
+                    font-size: 1rem;
+                }
+            }
+
             .order-option {
                 display: flex;
                 flex-direction: column;
