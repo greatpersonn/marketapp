@@ -68,6 +68,16 @@
             box-shadow: none;
         }
     }
+}
 
+@media screen and (max-width: 1460px) {
+    .container-shopcart {
+        width: 90%;
+        padding: 10px 15px;
 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
 }

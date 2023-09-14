@@ -1,9 +1,10 @@
 .title-navigation {
-    margin: 40px 0px 0px;
+    padding: 40px 15px 0px;
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 25px;
 
     a {

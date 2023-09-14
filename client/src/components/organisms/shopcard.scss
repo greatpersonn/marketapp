@@ -74,3 +74,33 @@
         cursor: pointer;
     }
 }
+
+@media screen and (max-width: 1600px) {
+    .shopcart-card {
+        width: 30%;
+        height: auto;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        gap: 30px;
+
+        img {
+            width: 55%;
+        }
+
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .shopcart-card {
+        width: 50%;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .shopcart-card {
+        width: 60%;
+    }
+}

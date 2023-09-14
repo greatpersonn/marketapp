@@ -1,12 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark } from '@fortawesome/free-solid-svg-icons';
 
 import Button from "../atoms/Button";
 import Input from '../atoms/Input';
-
-import { ModalContext } from '../../context/modal-context';
 
 import useInput from '../../hooks/useInput';
 
@@ -14,7 +10,6 @@ import './modal.scss';
 
 const ProfileModal = () => {
     let navigate = useNavigate();
-    const { setProfileModal } = useContext(ModalContext);
 
     const _name = useInput('', true);
     const _surname = useInput('', true);
@@ -37,7 +32,6 @@ const ProfileModal = () => {
             const jsonData = await response.json();
             if (jsonData.message) {
                 setTimeout(() => {
-                    setProfileModal(prev => !prev);
                     navigate('/', { replace: true });
                 }, 1500);
             }
@@ -58,7 +52,6 @@ const ProfileModal = () => {
                     <Input type='text' nameInput='Номер телефону' inputId='phoneUser' holderTitle="Введіть номер телефону..." inputObject={_phonenumber} />
                     <div className="container-buttons">
                         <Button name="Зберегти" func={() => { console.log('Create product'); }} />
-                        <FontAwesomeIcon icon={faXmark} className="closemodal-icon" onClick={() => { setProfileModal(prev => !prev) }} />
                     </div>
                 </div>
             </div>

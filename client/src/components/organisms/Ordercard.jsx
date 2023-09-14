@@ -1,11 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import Button from '../atoms/Button';
 import FeedbackModal from '../templates/FeedbackModal';
 import PaymentModal from '../templates/PaymentModal';
 import Modal from '../molecules/Modal';
-
-import { ModalContext } from '../../context/modal-context';
 
 import './ordercard.scss';
 

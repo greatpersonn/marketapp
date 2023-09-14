@@ -46,7 +46,7 @@ const Shopcart = () => {
                                     <p>Кошик <span>{JSON.parse(localStorage.getItem('user')).username}</span></p>
                                     {
                                         products.map((prod, id) => (
-                                            <Shopcard prod={prod} key={id} />
+                                            <Shopcard prod={prod} key={id} action={handleLoadProducts} />
                                         ))
                                     }
                                     <Button name='Створити замовлення' func={() => { setModalActive(prev => !prev); }} />

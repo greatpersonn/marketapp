@@ -42,3 +42,30 @@
         }
     }
 }
+
+@media screen and (max-width: 1480px) {
+    .container-aboutus {
+        .wrapper-article {
+            width: 60%;
+            display: flex;
+            flex-direction: column;
+
+            .article-content {
+                display: flex;
+                flex-direction: column;
+
+                .content-image {
+                    width: 100%;
+    
+                    img {
+                        width: 100%;
+                    }
+                }
+
+                .content-text {
+                    padding: 15px;
+                }
+            }
+        }
+    }
+}

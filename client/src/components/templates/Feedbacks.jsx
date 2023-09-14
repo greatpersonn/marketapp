@@ -81,7 +81,7 @@ const Feedbacks = () => {
                 {isLoading ? <Loader /> :
                     <>
                         <div className="feedback-header">
-                            <p>Відгуки про aquapeak</p>
+                            <span>Відгуки про aquapeak</span>
                             <span>Декілька рибок лишили за собою відгуки на свої замовлення. Ми активно слідкуємо за відгуками наших клієнтів і завжди раді їм - це допомогає нам покращити сервіс і надає натхнення до роботи!</span>
                         </div>
                         <div className="wrapper-feedbacks">

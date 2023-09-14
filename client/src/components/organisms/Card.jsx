@@ -1,12 +1,16 @@
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 import Button from '../atoms/Button';
 
 import './card.scss';
+import Modal from '../molecules/Modal';
 
 const Card = (props) => {
     let navigate = useNavigate();
+    const [modalActive, setModalActive] = useState(false);
+    const [modalText, setModalText] = useState('');
 
     const handleAdd = async (arg) => {
         try {
@@ -26,7 +30,8 @@ const Card = (props) => {
                 const jsonData = await response.json();
 
                 if (jsonData.message) {
-                    alert('Продукт был добавлен в вашу корзину!');
+                    setModalActive(prev => !prev);
+                    setModalText('Ця рибка потрапила у вашу сітку! А, ой, у корзину! :)');
                 }
             } else {
                 navigate('/sign-in', { replace: true });
@@ -35,7 +40,7 @@ const Card = (props) => {
             console.error(error);
         }
     }
-    
+
     const handleDelete = (data) => {
         console.log(data);
     }
@@ -46,20 +51,25 @@ const Card = (props) => {
     // }
 
     return (
-        <div className="container-card">
-            <img src={require(`../../../public/products/${props.cardData.productimage}`)} alt="productImage" />
-            <p>{props.cardData.productname}</p>
-            <p>{props.cardData.productdesc}</p>
-            <p>{props.cardData.productprice} грн</p>
-            <Button name='Додати у кошик' func={() => { handleAdd(props.cardData) }} />
-            {
-                JSON.parse(localStorage.getItem('status_login')) &&
-                JSON.parse(localStorage.getItem('user')).userrole == 'Admin' &&
-                <div className='card-control'>
-                    <DeleteIcon className='tool delete' onClick={() => { handleDelete(); }} />
-                </div>
-            }
-        </div>
+        <>
+            <div className="container-card">
+                <img src={require(`../../../public/products/${props.cardData.productimage}`)} alt="productImage" />
+                <p>{props.cardData.productname}</p>
+                <p>{props.cardData.productdesc}</p>
+                <p>{props.cardData.productprice} грн</p>
+                <Button name='Додати у кошик' func={() => { handleAdd(props.cardData) }} />
+                {
+                    JSON.parse(localStorage.getItem('status_login')) &&
+                    JSON.parse(localStorage.getItem('user')).userrole === 'Admin' &&
+                    <div className='card-control'>
+                        <DeleteIcon className='tool delete' onClick={() => { handleDelete(); }} />
+                    </div>
+                }
+            </div>
+            <Modal active={modalActive} setActive={setModalActive} header={"У кошик"}>
+                <span>{modalText}</span>
+            </Modal>
+        </>
     );
 }
 

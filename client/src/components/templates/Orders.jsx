@@ -36,7 +36,6 @@ const Orders = () => {
 
             const jsonData = await response.json();
             setOrders(handlerDate(jsonData.orders));
-            console.log(jsonData.orders);
             setLoading(false);
 
         } catch (error) {
@@ -119,76 +118,78 @@ const Orders = () => {
     return (
         <div className="container-orders">
             {isLoading && <Loader />}
-            <p>Список замовлень</p>
+            <div className="orders-header">
+                <span>Список замовлень</span>
+            </div>
             {
                 orders.map((order, id) => (
-                <div className="container-order">
-                    <div className="wrapper-order" key={id}>
-                        <div className="order-info">
-                            {order.orderstatus === 'В обробці' && <img src={require('../../assets/images/orderstatus/system.png')} alt="statusImage" />}
-                            {order.orderstatus === 'Підтверджений' && <img src={require('../../assets/images/orderstatus/confirmation.png')} alt="statusImage" />}
-                            {order.orderstatus === 'Комплектується' && <img src={require('../../assets/images/orderstatus/teamwork.png')} alt="statusImage" />}
-                            {order.orderstatus === 'Очікує клієнта' && <img src={require('../../assets/images/orderstatus/wait.png')} alt="statusImage" />}
-                            {order.orderstatus === 'Виконано' && <img src={require('../../assets/images/orderstatus/success.png')} alt="statusImage" />}
-                            {order.orderstatus === 'Доставлено' && <img src={require('../../assets/images/orderstatus/shipped.png')} alt="statusImage" />}
-                            <div className="info-title">
-                                <span>Номер замовлення:</span>
-                                <span>{order.ordernum}</span>
-                            </div>
-                            <div className="info-title">
-                                <span>Телефон клієнта:</span>
-                                <a href={`tel:${order.phonenumber}`}>{order.phonenumber}</a>
-                            </div>
-                            <div className="info-title">
-                                <span>Дата замовлення:</span>
-                                <span>{order.orderdate}</span>
-                            </div>
-                            <div className="info-title">
-                                <span>Сплачено:</span>
-                                { order.payment ? <CheckIcon /> : <CloseIcon /> }
-                            </div>
-                        </div>
-                        <div className="order-products">    
-                            <TableContainer component={Paper}>
-                                <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
-                                    <TableHead>
-                                    <TableRow>
-                                        <TableCell>Товар</TableCell>
-                                        <TableCell align="right">Кількість</TableCell>
-                                    </TableRow>
-                                    </TableHead>
-                                    <TableBody>
-                                        {
-                                            order.orderproducts.map((prod, id) => (
-                                                <TableRow key={id}>
-                                                    <TableCell>{prod.productname}</TableCell>
-                                                    <TableCell align="right">1</TableCell>
-                                                </TableRow>
-                                            ))
-                                        }
-                                    </TableBody>
-                                </Table>
-                            </TableContainer>
-                            <div className='dropdown-list'>
-                                <div className="list-header" onClick={() => { setList(prev => !prev) }}>
-                                    <span>{isValue}</span>
-                                    <ArrowDropDownIcon className={`${isList && 'open-list'}`} />
+                    <div className="container-order" key={id}>
+                        <div className="wrapper-order">
+                            <div className="order-info">
+                                {order.orderstatus === 'В обробці' && <img src={require('../../assets/images/orderstatus/system.png')} alt="statusImage" />}
+                                {order.orderstatus === 'Підтверджений' && <img src={require('../../assets/images/orderstatus/confirmation.png')} alt="statusImage" />}
+                                {order.orderstatus === 'Комплектується' && <img src={require('../../assets/images/orderstatus/teamwork.png')} alt="statusImage" />}
+                                {order.orderstatus === 'Очікує клієнта' && <img src={require('../../assets/images/orderstatus/wait.png')} alt="statusImage" />}
+                                {order.orderstatus === 'Виконано' && <img src={require('../../assets/images/orderstatus/success.png')} alt="statusImage" />}
+                                {order.orderstatus === 'Доставлено' && <img src={require('../../assets/images/orderstatus/shipped.png')} alt="statusImage" />}
+                                <div className="info-title">
+                                    <span>Номер замовлення:</span>
+                                    <span>{order.ordernum}</span>
                                 </div>
-                                {isList &&
-                                    <div className="list">
-                                        <li onClick={(e) => handleList(e, 'В обробці')}>В обробці</li>
-                                        <li onClick={(e) => handleList(e, 'Підтверджений')}>Підтверджений</li>
-                                        <li onClick={(e) => handleList(e, 'Комплектується')}>Комплектується</li>
-                                        <li onClick={(e) => handleList(e, 'Очікує клієнта')}>В очікуванні клієнта</li>
-                                        <li onClick={(e) => handleList(e, 'Виконано')}>Виконан</li>
-                                        <li onClick={(e) => handleList(e, 'Доставлен')}>Доставлен</li>
+                                <div className="info-title">
+                                    <span>Телефон клієнта:</span>
+                                    <a href={`tel:${order.phonenumber}`}>{order.phonenumber}</a>
+                                </div>
+                                <div className="info-title">
+                                    <span>Дата замовлення:</span>
+                                    <span>{order.orderdate}</span>
+                                </div>
+                                <div className="info-title">
+                                    <span>Сплачено:</span>
+                                    {order.payment ? <CheckIcon /> : <CloseIcon />}
+                                </div>
+                            </div>
+                            <div className="order-products">
+                                <TableContainer component={Paper}>
+                                    <Table sx={{ minWidth: 250 }} size="small" aria-label="a dense table">
+                                        <TableHead>
+                                            <TableRow>
+                                                <TableCell>Товар</TableCell>
+                                                <TableCell align="right">Кількість</TableCell>
+                                            </TableRow>
+                                        </TableHead>
+                                        <TableBody>
+                                            {
+                                                order.orderproducts.map((prod, id) => (
+                                                    <TableRow key={id}>
+                                                        <TableCell>{prod.productname}</TableCell>
+                                                        <TableCell align="right">1</TableCell>
+                                                    </TableRow>
+                                                ))
+                                            }
+                                        </TableBody>
+                                    </Table>
+                                </TableContainer>
+                                <div className='dropdown-list'>
+                                    <div className="list-header" onClick={() => { setList(prev => !prev) }}>
+                                        <span>{isValue}</span>
+                                        <ArrowDropDownIcon className={`${isList && 'open-list'}`} />
                                     </div>
-                                }
+                                    {isList &&
+                                        <div className="list">
+                                            <li onClick={(e) => handleList(e, 'В обробці')}>В обробці</li>
+                                            <li onClick={(e) => handleList(e, 'Підтверджений')}>Підтверджений</li>
+                                            <li onClick={(e) => handleList(e, 'Комплектується')}>Комплектується</li>
+                                            <li onClick={(e) => handleList(e, 'Очікує клієнта')}>В очікуванні клієнта</li>
+                                            <li onClick={(e) => handleList(e, 'Виконано')}>Виконан</li>
+                                            <li onClick={(e) => handleList(e, 'Доставлен')}>Доставлен</li>
+                                        </div>
+                                    }
+                                </div>
                             </div>
                         </div>
+                        <Button name="Змінити" func={() => { handleChangeStatus(order) }} />
                     </div>
-                    <Button name="Змінити" func={() => { handleChangeStatus(order) }} />
-                </div>
                 ))
             }
         </div>

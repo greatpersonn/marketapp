@@ -6,7 +6,6 @@ import Loader from '../atoms/Loader';
 
 import './products.scss';
 
-
 const Products = () => {
     const [products, setProduct] = useState([]);
     const [isLoading, setLoading] = useState(false);

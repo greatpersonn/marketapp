@@ -9,18 +9,18 @@ import Ordercard from '../organisms/Ordercard';
 import ProfileModal from './ProfileModal';
 
 import { AuthContext } from "../../context/auth-context";
-import { ModalContext } from '../../context/modal-context';
 
 import './profile.scss';
+import Modal from '../molecules/Modal';
 
 const Profile = () => {
     const [isLoading, setLoading] = useState(false);
 
     const [user, setUser] = useState({ userimage: 'defaultUser.png', username: '', useremail: '', userrole: 'User' });
     const [orders, setOrders] = useState([]);
+    const [modalActive, setModalActive] = useState(false);
 
     const { statusLogin, setStatus } = useContext(AuthContext);
-    const { isProfile, setProfileModal } = useContext(ModalContext);
 
     const handleLoadData = async () => {
         setLoading(true);
@@ -66,12 +66,12 @@ const Profile = () => {
                                             <div className="container-title">
                                                 <AccountCircleOutlinedIcon />
                                                 <div className="title-info">
-                                                    { user.name != undefined ? <span>{user.name} {user.surname}</span> : <span>{user.username}</span> }
+                                                    { user.name !== undefined ? <span>{user.name} {user.surname}</span> : <span>{user.username}</span> }
                                                     <span>{user.useremail}</span>
                                                 </div>
                                             </div>
                                             {
-                                                user.name != undefined ? 
+                                                user.name !== undefined ? 
                                                 <div className="container-subtitle">
                                                     <div className="subtitle-info">Номер телефону <span>{ user.phone }</span></div>
                                                     <div className="subtitle-info">Місто <span>{ user.city }</span></div>
@@ -82,7 +82,7 @@ const Profile = () => {
 
                                         <NavLink to="/">Головна</NavLink>
                                         <NavLink to="/shop-cart">Кошик</NavLink>
-                                        <Button name='Особиста інформація' func={() => { setProfileModal(prev => !prev); }} />
+                                        <Button name='Особиста інформація' func={() => { setModalActive(prev => !prev); }} />
                                         {
                                             user.userrole === 'Admin' || user.userrole === 'Moderator' || user.userrole === 'Operator' ? <NavLink to='/adminpanel'>Панель робітника</NavLink> : null
                                         }
@@ -96,7 +96,10 @@ const Profile = () => {
                                         }
                                     </div>
                                     {
-                                        isProfile && <ProfileModal />
+                                        modalActive && 
+                                        <Modal active={modalActive} setActive={setModalActive} header={"Особиста інформація"}>
+                                            <ProfileModal />
+                                        </Modal>
                                     }
                                 </>
                         }

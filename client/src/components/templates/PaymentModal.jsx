@@ -1,13 +1,9 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faXmark, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 import Button from "../atoms/Button";
 import Input from '../atoms/Input';
 import Loader from "../atoms/Loader";
-
-import { ModalContext } from '../../context/modal-context';
 
 import useInput from '../../hooks/useInput';
 
@@ -16,7 +12,6 @@ import './modal.scss';
 const PaymentModal = (props) => {
     let navigate = useNavigate();
 
-    const { isPayment, setPaymentModal } = useContext(ModalContext);
     const [isLoading, setLoading] = useState(false);
 
     const _cardnum = useInput('', true);
@@ -42,7 +37,6 @@ const PaymentModal = (props) => {
             if (jsonData.message) {
                 setTimeout(() => {
                     setLoading(prev => !prev);
-                    setPaymentModal(prev => !prev);
                     navigate('/', { replace: true }); 
                 }, 2000);
             }

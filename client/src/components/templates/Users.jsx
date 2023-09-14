@@ -7,13 +7,13 @@ import Loader from '../atoms/Loader';
 import Edit from '../templates/Edit';
 
 import { AuthContext } from '../../context/auth-context';
-import { ModalContext } from "../../context/modal-context";
 
 import './users.scss';
+import Modal from "../molecules/Modal";
 
 const Users = () => {
     const { statusLogin } = useContext(AuthContext);
-    const { isEditModal } = useContext(ModalContext);
+    const [modalActive, setModalActive] = useState(false);
     
     const [isLoading, setLoading] = useState(false);
     const [users, setUsers] = useState([]);
@@ -48,7 +48,7 @@ const Users = () => {
                                     {
                                         user.userrole === 'Admin' || 'Moderator' ?
                                             users.map((user, id) => (
-                                                <User key={id} cardData={user} />
+                                                <User key={id} cardData={user} action={handleLoadUsers} modalAction={setModalActive} />
                                             ))
                                         :
                                             <p>You are not a admin!</p>
@@ -60,7 +60,9 @@ const Users = () => {
                     <NavLink to='/sign-in'>Авторизуватись</NavLink>
             }
             {
-                isEditModal && <Edit />
+                <Modal active={modalActive} setActive={setModalActive} header={'Редагування користувача'}>
+                    <Edit />
+                </Modal>
             }
         </>
     );

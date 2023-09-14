@@ -1,21 +1,20 @@
-import { useContext } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
 import PersonIcon from '@mui/icons-material/Person';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-import { ModalContext } from "../../context/modal-context";
+import Modal from "../molecules/Modal";
 
 import './user.scss';
 
 const User = (props) => {
-    const { setEditModal } = useContext(ModalContext);
-    let navigate = useNavigate();
+    const [modalActive, setModalActive] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     const handleSetEdit = () => {
         localStorage.setItem('editeduser', JSON.stringify(props.cardData));
-        setEditModal(prev => !prev);
+        props.modalAction(true);
     }
 
     const handleDelete = async () => {
@@ -27,7 +26,9 @@ const User = (props) => {
 
         const jsonData = await response.json();
         if(jsonData.message) {
-            navigate('/', { replace: true });
+            setModalActive(prev => !prev);
+            setModalMessage(jsonData.message);
+            props.action();
         }
     }
 
@@ -47,6 +48,9 @@ const User = (props) => {
                     <DeleteIcon className='tool delete' onClick={() => { handleDelete(); }} />
                 </div>
             </div>
+            <Modal active={modalActive} setActive={setModalActive} header={'Видалення користувача'}>
+                <span>{modalMessage}</span>
+            </Modal>
         </>
     );
 }

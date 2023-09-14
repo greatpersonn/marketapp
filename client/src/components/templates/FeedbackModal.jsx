@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import Rating from '@mui/material/Rating';
 
 import Input from '../atoms/Input';
 import Button from '../atoms/Button';
 
-import { ModalContext } from '../../context/modal-context';
 import useInput from '../../hooks/useInput';
 
 import './modal.scss'
@@ -19,7 +18,6 @@ const FeedbackModal = ({ order }) => {
     const _username = useInput('', true);
     const _usersurname = useInput('', true);
     const _usernumber = useInput('', true);
-    
 
     const handleLoadData = () => {
         let userdata = JSON.parse(localStorage.getItem('user'));
@@ -65,9 +63,9 @@ const FeedbackModal = ({ order }) => {
         <form onSubmit={createFeedback} className='form-modal'>
             <div className="main__modal-container">
                 <div className="container-info">
-                    <Input type='text' nameInput='Ім`я' inputId='productName' holderTitle="Введіть своє ім`я..." inputObject={_username} />
-                    <Input type='text' nameInput='Прізвище' inputId='productKey' holderTitle="Введіть своє прізвище..." inputObject={_usersurname} />
-                    <Input type='text' nameInput='Номер телефону' inputId='productKey' holderTitle="Введіть свій номер телефону..." inputObject={_usernumber} />
+                    <Input type='text' nameInput='Ім`я' inputId='firstName' holderTitle="Введіть своє ім`я..." inputObject={_username} />
+                    <Input type='text' nameInput='Прізвище' inputId='lastName' holderTitle="Введіть своє прізвище..." inputObject={_usersurname} />
+                    <Input type='text' nameInput='Номер телефону' inputId='phoneNumber' holderTitle="Введіть свій номер телефону..." inputObject={_usernumber} />
                     <div className="container-textarea">
                         <textarea name="feedback" id="feedback" cols="30" rows="10" onChange={e => setFeedback(e.target.value)}></textarea>
                     </div>
