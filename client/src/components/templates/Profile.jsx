@@ -80,13 +80,15 @@ const Profile = () => {
                                             }
                                         </div>
 
-                                        <NavLink to="/">Головна</NavLink>
-                                        <NavLink to="/shop-cart">Кошик</NavLink>
-                                        <Button name='Особиста інформація' func={() => { setModalActive(prev => !prev); }} />
-                                        {
-                                            user.userrole === 'Admin' || user.userrole === 'Moderator' || user.userrole === 'Operator' ? <NavLink to='/adminpanel'>Панель робітника</NavLink> : null
-                                        }
-                                        <NavLink to="/" onClick={handleLogout}>Вийти з кабінету</NavLink>
+                                        <div className="title-options">
+                                            <NavLink to="/">Головна</NavLink>
+                                            <NavLink to="/shop-cart">Кошик</NavLink>
+                                            <Button name='Особиста інформація' func={() => { setModalActive(prev => !prev); }} />
+                                            {
+                                                user.userrole === 'Admin' || user.userrole === 'Moderator' || user.userrole === 'Operator' ? <NavLink to='/adminpanel'>Панель робітника</NavLink> : null
+                                            }
+                                            <NavLink to="/" onClick={handleLogout}>Вийти з кабінету</NavLink>
+                                        </div>
                                     </div>
                                     <div className="profile-order">
                                         {

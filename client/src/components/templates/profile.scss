@@ -147,10 +147,77 @@
 
 }
 
-main.darkthemes {
+@media screen and (max-width: 1550px) {
     .container-profile {
-        p {
-            color: #fff;
+        width: 90%;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: 30px;
+    }
+}
+
+@media screen and (max-width: 1180px) {
+    .container-profile {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        
+        .profile-info {
+            width: 700px;
+            margin: 70px 0px 0px;
+            display: flex;
+            flex-direction: row;
+            gap: 25px;
+            
+            .title-options {
+                margin: 10px 0px;
+            }
+
+            .info-container {
+                width: 40%;
+            }
+
+        }
+
+        .profile-order {
+            margin: 0px;
+        }
+    }
+}
+
+@media screen and (max-width: 780px) {
+    .container-profile {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+
+        .profile-info {
+            width: 350px;
+            margin: 70px 0px 0px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 5px;
+
+            .info-container {
+                width: 100%;
+                .container-subtitle {
+                    .subtitle-info {
+                        width: 85%;
+                    }
+                }
+            }
+
+            .title-options {
+                width: 100%;
+            }
         }
     }
 }

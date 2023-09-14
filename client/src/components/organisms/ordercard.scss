@@ -56,3 +56,27 @@
         flex-direction: row-reverse;
     }
 }
+
+@media screen and (max-width: 1550px) {
+    .container-ordercard {
+        width: 90%;
+        padding: 15px 30px;
+    
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        .ordercard-feedback {
+            width: 100%;
+            padding: 0px;
+    
+            display: flex;
+            flex-direction: row-reverse;
+        }
+    }
+}
+
+@media screen and (max-width: 1170px) {
+    
+}
