@@ -2,6 +2,22 @@
     width: 100%;
     margin: 20px 0px;
 
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+@media screen and (max-width: 1610px) {
+    .container-users {
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 15px;
+    }
+       
 }

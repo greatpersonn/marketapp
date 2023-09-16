@@ -8,8 +8,9 @@ import Edit from '../templates/Edit';
 
 import { AuthContext } from '../../context/auth-context';
 
-import './users.scss';
 import Modal from "../molecules/Modal";
+
+import './users.scss';
 
 const Users = () => {
     const { statusLogin } = useContext(AuthContext);
