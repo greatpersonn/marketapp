@@ -1,7 +1,9 @@
 import React, { useContext } from "react";
 import { useNavigate, NavLink } from "react-router-dom";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faKey, faAt, faUnlockKeyhole } from '@fortawesome/free-solid-svg-icons';
+import PersonIcon from '@mui/icons-material/Person';
+import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
+import KeyIcon from '@mui/icons-material/Key';
+import PasswordIcon from '@mui/icons-material/Password';
 
 import Input from "../atoms/Input";
 import Button from "../atoms/Button";
@@ -70,19 +72,19 @@ const SignUp = () => {
                 <div className="signin-headtext">Реєстрація</div>
                 <div className="wrap_input">
                     <Input type='text' nameInput='Логін' holderTitle='Введіть ваш логін...' inputObject={_username} inputId='username' />
-                    <FontAwesomeIcon icon={faUser} />
+                    <PersonIcon />
                 </div>
                 <div className="wrap_input">
                     <Input type='email' nameInput='Електронна пошта' holderTitle='Введіть вашу пошту...' inputObject={_useremail} inputId='useremail' />
-                    <FontAwesomeIcon icon={faAt} />
+                    <AlternateEmailIcon />
                 </div>
                 <div className="wrap_input">
                     <Input type='password' nameInput='Пароль' holderTitle='Введіть ваш пароль...' inputObject={_userpass} inputId='userpass' />
-                    <FontAwesomeIcon icon={faKey} />
+                    <KeyIcon />
                 </div>
                 <div className="wrap_input">
                     <Input type='password' nameInput='Підтвердити пароль' holderTitle='Повторно введіть пароль...' inputObject={_confpass} inputId='confpass' />
-                    <FontAwesomeIcon icon={faUnlockKeyhole} />
+                    <PasswordIcon />
                 </div>
                 <Button name='Створити акаунт' func={() => { console.log('Регистация пользователя'); }} />
                 <NavLink to='/sign-in'>Вже плаваєте у нас?</NavLink>

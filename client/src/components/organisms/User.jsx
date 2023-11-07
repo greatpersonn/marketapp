@@ -1,20 +1,20 @@
-import { useContext } from "react";
+import { useState } from "react";
 import { useEffect } from "react";
-import { useNavigate } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencil, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import PersonIcon from '@mui/icons-material/Person';
+import EditIcon from '@mui/icons-material/Edit';
+import DeleteIcon from '@mui/icons-material/Delete';
 
-import { ModalContext } from "../../context/modal-context";
+import Modal from "../molecules/Modal";
 
 import './user.scss';
 
 const User = (props) => {
-    const { setEditModal } = useContext(ModalContext);
-    let navigate = useNavigate();
+    const [modalActive, setModalActive] = useState(false);
+    const [modalMessage, setModalMessage] = useState('');
 
     const handleSetEdit = () => {
         localStorage.setItem('editeduser', JSON.stringify(props.cardData));
-        setEditModal(prev => !prev);
+        props.modalAction(true);
     }
 
     const handleDelete = async () => {
@@ -26,7 +26,9 @@ const User = (props) => {
 
         const jsonData = await response.json();
         if(jsonData.message) {
-            navigate('/', { replace: true });
+            setModalActive(prev => !prev);
+            setModalMessage(jsonData.message);
+            props.action();
         }
     }
 
@@ -37,15 +39,18 @@ const User = (props) => {
     return (
         <>
             <div className="container-user">
-                <img src={require(`../../../public/users/${props.cardData.userimage}`)} alt="userImage" />
-                <p>{props.cardData.username}</p>
-                <p>{props.cardData.useremail}</p>
-                <p>{props.cardData.userrole}</p>
+                <PersonIcon />
+                <span>{props.cardData.username}</span>
+                <span>{props.cardData.useremail}</span>
+                <span>{props.cardData.userrole}</span>
                 <div className="container-tools">
-                    <FontAwesomeIcon icon={faPencil} className='tool edit' onClick={() => { handleSetEdit(); }} />
-                    <FontAwesomeIcon icon={faTrashCan} className='tool delete' onClick={() => { handleDelete(); }} />
+                    <EditIcon className='tool edit' onClick={() => { handleSetEdit(); }} />
+                    <DeleteIcon className='tool delete' onClick={() => { handleDelete(); }} />
                 </div>
             </div>
+            <Modal active={modalActive} setActive={setModalActive} header={'Видалення користувача'}>
+                <span>{modalMessage}</span>
+            </Modal>
         </>
     );
 }

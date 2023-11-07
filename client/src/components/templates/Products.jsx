@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+import Pagination from "../molecules/Pagination";
 import Card from "../organisms/Card";
 import Loader from '../atoms/Loader';
 
@@ -51,15 +52,10 @@ const Products = () => {
                     ))
                 }
             </div>
-            <div className="container-pagination">
-                {
-                    pageNumber.map(number => (
-                        <li className='page-item' key={number} onClick={() => { paginate(number) }}>
-                            {number}
-                        </li>
-                    ))
-                }
-            </div>
+            {
+                products.length > 4 &&
+                <Pagination pageNumber={pageNumber} paginate={paginate} currentPage={currentPage} lastIndex={lastProudctIndex} />
+            }
         </>
     );
 }

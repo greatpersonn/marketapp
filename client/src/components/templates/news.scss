@@ -3,6 +3,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 30px;
 
     form {
         width: 300px;
@@ -91,6 +92,7 @@
                 height: 100%;
 
                 position: absolute;
+                z-index: 999;
 
                 margin: 15px 0px 0px;
                 padding: 0;

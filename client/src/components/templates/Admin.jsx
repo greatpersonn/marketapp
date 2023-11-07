@@ -1,22 +1,27 @@
 import { useState, useEffect, useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import NewspaperIcon from '@mui/icons-material/Newspaper';
+import RecentActorsIcon from '@mui/icons-material/RecentActors';
 
 import Button from '../atoms/Button';
-import Create from '../templates/Create';
-import NewsModal from '../templates/NewsModal';
+import Navigation from '../organisms/Navigation';
+import Modal from '../molecules/Modal';
+import Create from './Create';
+import NewsModal from './NewsModal';
 
 import { AuthContext } from '../../context/auth-context';
-import { ModalContext } from '../../context/modal-context';
 
 import './admin.scss';
-import Navigation from '../organisms/Navigation';
 
 const Admin = () => {
     const [isLoading, setLoading] = useState(false);
     const [user, setUser] = useState({ userimage: 'defaultUser.png', username: '', useremail: '', userrole: 'User' });
+    const [modalNews, setModalNews] = useState(false);
+    const [modalProd, setModalProd] = useState(false);
 
     const { statusLogin } = useContext(AuthContext);
-    const { isAddModal, setAddModal, isNews, setNewsModal } = useContext(ModalContext);
 
 
     const handleLoadData = async () => {
@@ -29,11 +34,11 @@ const Admin = () => {
     }
 
     const handleAddProduct = () => {
-        setAddModal(prev => !prev);
+        setModalProd(prev => !prev);
     }
 
     const handleAddNews = () => {
-        setNewsModal(prev => !prev);
+        setModalNews(prev => !prev);
     }
 
     useEffect(() => {
@@ -44,18 +49,32 @@ const Admin = () => {
         <>
             <Navigation />
             <div className="container-adminpanel">
-                <p>Панель адміністратора сайту</p>
-                <p>Привіт, {user.username}, ти авторизувався як адміністратор, можешь виконувати свою роботу, успіхів!</p>
+                <div className="adminpanel-header">
+                    <span>Панель адміністратора сайту</span>
+                    <span>Привіт, {user.username}, ти авторизувався як адміністратор, можешь виконувати свою роботу, успіхів!</span>
+                </div>
                 {
                     statusLogin ?
                         user.userrole === 'Admin' || user.userrole === 'Moderator' || user.userrole === 'Operator' ?
                             <>
                                 {
                                     <div className="title-moder">
-                                        <Button name='Додати товар' func={() => { handleAddProduct() }} />
-                                        <Button name='Додати новину' func={() => { handleAddNews() }} />
-                                        <NavLink to='/users'>Список користувачів</NavLink>
-                                        <NavLink to='/orders'>Статус замовлення</NavLink>
+                                        <div className="moder-action-wrapper">
+                                            <ShoppingCartIcon />
+                                            <Button name='Додати товар' func={() => { handleAddProduct() }} />
+                                        </div>
+                                        <div className="moder-action-wrapper">
+                                            <NewspaperIcon />
+                                            <Button name='Додати новину' func={() => { handleAddNews() }} />
+                                        </div>
+                                        <div className="moder-action-wrapper">
+                                            <RecentActorsIcon />
+                                            <NavLink to='/users'>Список користувачів</NavLink>
+                                        </div>
+                                        <div className="moder-action-wrapper">
+                                            <LocalShippingIcon />
+                                            <NavLink to='/orders'>Статус замовлення</NavLink>
+                                        </div>
                                     </div>
                                 }
                             </>
@@ -65,13 +84,17 @@ const Admin = () => {
                         <p>Dou u know de way?</p>
                 }
             </div>
-
             {
-                isAddModal && <Create />
+                modalProd &&
+                <Modal active={modalProd} setActive={setModalProd} header={"Створити товар"}>
+                    <Create />
+                </Modal>
             }
-
             {
-                isNews && <NewsModal />
+                modalNews &&
+                <Modal active={modalNews} setActive={setModalNews} header={"Створити новину"}>
+                    <NewsModal />
+                </Modal>
             }
         </>
     );

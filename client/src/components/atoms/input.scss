@@ -1,18 +1,9 @@
-.container-input {
+﻿.container-input {
     padding: 5px 0px;
-
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-
-    label {
-        padding: 15px 10px 8px;
-        font-size: 1rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        color: rgba(26, 26, 26, 0.8);
-    }
 
     input {
         width: 280px;
@@ -21,37 +12,28 @@
         border: none;
         outline: none;
         background: #ffffff;
-        border-radius: 15px;
-      
-        color: rgba(26, 26, 26, 0.7);
+
+        border-radius: 7px;
+        border: 1px solid rgba(37, 37, 37, 0.7);
+        box-sizing: border-box;
+
+        color: rgba(37, 37, 37, 0.7);
         font-size: 0.9rem;
-        font-weight: 600;
-        font-family: 'Commissioner', sans-serif;
+        font-weight: 400;
 
         &::placeholder {
             transition: .5s all;
-
             font-size: 0.80rem;
-            font-family: 'Commissioner', sans-serif;
-            font-weight: 600;
-            color: rgba(26, 26, 26, 0.5);
+            font-weight: 400;
+            color: rgba(37, 37, 37, 0.8);
         }
 
         &:focus {
-            outline: 2px solid #159895;
-
             &::placeholder {
                 transition: .5s all;
                 opacity: 0;
                 transform: translateX(15px);
             }
         }
-    }
-
-}
-
-main.darkthemes {
-    label {
-        color: #fff;
     }
 }
