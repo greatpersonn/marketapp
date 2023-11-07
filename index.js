@@ -1,3 +1,5 @@
+require('dotenv').config();
+
 // Models for Database
 const { User } = require('./models/User');
 const { Product } = require('./models/Product');
@@ -11,7 +13,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcrypt');
 
 // Settings
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5432;
 const app = express();
 
 app.use(express.json());
@@ -577,10 +579,15 @@ app.get('/get-all-feedbacks', async (req, res) => {
 const start = async () => {
     try {
         await mongoose.connect('mongodb+srv://shopopalo:Var54321@cluster0.qvze0.mongodb.net/?retryWrites=true&w=majority');
-        app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
+
+        if (process.env.NODE_ENV !== "test") {
+            app.listen(PORT, () => console.log(`Server started on port: ${PORT}`));
+        }
     } catch (e) {
         console.error(e);
     }
 }
 
 start();
+
+module.exports = app;

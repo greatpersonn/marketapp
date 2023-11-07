@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 import CheckIcon from '@mui/icons-material/Check';
 import CloseIcon from '@mui/icons-material/Close';
-import ArrowDropDownIcon from '@mui/icons-material/ArrowDropDown';
+
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -15,6 +15,7 @@ import Paper from '@mui/material/Paper';
 
 import Loader from "../atoms/Loader";
 import Button from '../atoms/Button';
+import DropDown from "../atoms/DropDown";
 
 import './orders.scss';
 
@@ -23,7 +24,6 @@ const Orders = () => {
     const [isLoading, setLoading] = useState(false);
     const [orders, setOrders] = useState([]);
     const [isList, setList] = useState(false);
-    const [isValue, setValue] = useState('В обробці');
 
     const [status, setStatus] = useState('В обробці');
 
@@ -105,12 +105,6 @@ const Orders = () => {
         }
     }
 
-    const handleList = (e, data) => {
-        setValue(e.target.innerText);
-        setStatus(data);
-        setList(prev => !prev);
-    }
-
     useEffect(() => {
         handleLoadData();
     }, []);
@@ -123,7 +117,7 @@ const Orders = () => {
             </div>
             {
                 orders.map((order, id) => (
-                    <div className="container-order" key={id}>
+                    <div className="container-order" key={id + 1}>
                         <div className="wrapper-order">
                             <div className="order-info">
                                 {order.orderstatus === 'В обробці' && <img src={require('../../assets/images/orderstatus/system.png')} alt="statusImage" />}
@@ -170,22 +164,7 @@ const Orders = () => {
                                         </TableBody>
                                     </Table>
                                 </TableContainer>
-                                <div className='dropdown-list'>
-                                    <div className="list-header" onClick={() => { setList(prev => !prev) }}>
-                                        <span>{isValue}</span>
-                                        <ArrowDropDownIcon className={`${isList && 'open-list'}`} />
-                                    </div>
-                                    {isList &&
-                                        <div className="list">
-                                            <li onClick={(e) => handleList(e, 'В обробці')}>В обробці</li>
-                                            <li onClick={(e) => handleList(e, 'Підтверджений')}>Підтверджений</li>
-                                            <li onClick={(e) => handleList(e, 'Комплектується')}>Комплектується</li>
-                                            <li onClick={(e) => handleList(e, 'Очікує клієнта')}>В очікуванні клієнта</li>
-                                            <li onClick={(e) => handleList(e, 'Виконано')}>Виконан</li>
-                                            <li onClick={(e) => handleList(e, 'Доставлен')}>Доставлен</li>
-                                        </div>
-                                    }
-                                </div>
+                                <DropDown key={id} setStatus={setStatus} />
                             </div>
                         </div>
                         <Button name="Змінити" func={() => { handleChangeStatus(order) }} />
